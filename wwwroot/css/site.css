@@ -20,3 +20,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.container {
+    margin: 0;
+    padding: 0;
+}
+
+.side-bar {
+    position: absolute;
+    background-color: #000;
+    margin: 10px;
+    width: 400px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+.map {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+}

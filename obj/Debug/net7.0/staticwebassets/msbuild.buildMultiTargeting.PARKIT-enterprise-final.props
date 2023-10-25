@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PARKIT-enterprise-final.props" />
+</Project>
