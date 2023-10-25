@@ -20,3 +20,30 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+main {
+    overflow: hidden;
+    width: calc(100vw - 20px);
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+}
+
+.side-bar {
+    position: absolute;
+    background-color: #000;
+    margin: 20px;
+    width: 400px;
+    height: 400px;
+    border-radius: 2px;
+}
+
+.map {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 500px;
+    padding: 10px; 
+}
