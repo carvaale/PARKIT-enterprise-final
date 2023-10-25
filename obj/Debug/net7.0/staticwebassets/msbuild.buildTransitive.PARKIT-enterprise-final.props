@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\PARKIT-enterprise-final.props" />
-</Project>
