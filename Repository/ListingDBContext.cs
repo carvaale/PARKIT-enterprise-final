@@ -5,10 +5,6 @@ namespace PARKIT_enterprise_final.Repository
 {
     public partial class ListingDBContext : DbContext
     {
-        public ListingDBContext()
-        {
-        }
-
         public ListingDBContext(DbContextOptions<ListingDBContext> options)
             : base(options)
         {
