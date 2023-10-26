@@ -2,7 +2,7 @@
 {
     public interface IMapProvider
     {
-        // Initialize map object
-        Map InitializeMap();
+        // Initialize or Reload map
+        Map LoadMap();
     }
 }

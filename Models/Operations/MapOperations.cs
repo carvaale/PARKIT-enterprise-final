@@ -14,7 +14,7 @@ namespace PARKIT_enterprise_final.Models.Operations
             map = new Map();
         }
 
-        public Map InitializeMap()
+        public Map LoadMap()
         {
             map.Listings = _context.Listings.ToList();
             return map;
