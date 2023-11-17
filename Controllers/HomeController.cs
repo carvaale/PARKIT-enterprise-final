@@ -17,6 +17,11 @@ namespace PARKIT_enterprise_final.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult CreateListing()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
