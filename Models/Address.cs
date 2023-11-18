@@ -1,5 +1,8 @@
-﻿namespace PARKIT_enterprise_final.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace PARKIT_enterprise_final.Models
 {
+    [Owned]
     public class Address
     {
         public string StreetAddress { get; set; }
