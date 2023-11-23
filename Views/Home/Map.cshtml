@@ -1,0 +1,66 @@
+﻿@model IEnumerable<PARKIT_enterprise_final.Models.Listing>
+@{
+    ViewData["Title"] = "Map";
+}
+
+<div class="side-bar">
+    @*logic for listings pulled from DB*@
+</div>
+
+<div id="map" class="map" />
+
+<script>
+    async function initMap() {
+        // Request needed libraries.
+        const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+
+        var map = new Map(document.getElementById('map'), {
+            zoom: 12,
+            center: { lat: 43.65804053299989, lng: -79.4349384105354 },
+            mapId: 'ed84065a5ae2b96e',
+            disableDefaultUI: true,
+        });
+
+        const tourStops = [
+            @for (int i = 0; i < Model.Count(); i++)
+			{
+				<text>
+					{
+                        position: { lat: @Convert.ToDouble(Model.ElementAt(i).Address.Latitude), lng: @Convert.ToDouble(Model.ElementAt(i).Address.Longitude) },
+					    title: "@Model.ElementAt(i).Address.StreetAddress",
+					},
+				</text>
+			}
+        ];
+
+        // Create an info window to share between markers.
+        const infoWindow = new InfoWindow();
+
+
+        // Create the markers.
+        tourStops.forEach((location, i) => {
+            const parkingImg = document.createElement("img");
+            parkingImg.src = "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_parking_park-1024.png"
+            parkingImg.style.width = "50px";
+
+
+            const marker = new AdvancedMarkerElement({
+                position: location.position,
+                map,
+                title: `${i + 1}. ${location.title}`,
+                content: parkingImg,
+            });
+
+            // Add a click listener for each marker, and set up the info window.
+            marker.addListener("click", ({ domEvent, latLng }) => {
+                const { target } = domEvent;
+
+                infoWindow.close();
+                infoWindow.setContent(marker.title);
+                infoWindow.open(marker.map, marker);
+            });
+        });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJcxh-Z5LjR8UNl3BzyRrDmQap5rx-ZZA&callback=initMap" async defer></script>
