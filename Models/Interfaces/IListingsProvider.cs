@@ -8,6 +8,11 @@
 
         Image AddImage(Image image);
 
+        Listing GetById(Guid id);
+
+        List<Listing> GetListings();
+        
+
 
     }
 }

@@ -26,6 +26,19 @@ namespace PARKIT_enterprise_final.Models.Operations
             return listing;
         }
 
+        public Listing GetById(Guid id)
+        {
+            Listing listing = _context.Listings.Find(id);
+            return listing;
+            
+        }
+
+        public List<Listing> GetListings()
+        {
+            List<Listing> listings = _context.Listings.ToList();
+            return listings;
+        }
+
         public Listing UpdateListing(Listing listing)
         {
             _context.Listings.Update(listing);

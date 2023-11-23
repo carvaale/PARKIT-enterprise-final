@@ -11,11 +11,15 @@ namespace PARKIT_enterprise_final.Models.DBContext
 
         public DbSet<Listing> Listings { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Listing>().OwnsOne(l => l.Address);
             modelBuilder.Entity<Listing>().OwnsMany(l => l.Images);
+            modelBuilder.Entity<User>().OwnsOne(u => u.Address);
+            modelBuilder.Entity<User>().OwnsOne(u => u.Wallet);
+            modelBuilder.Entity<User>().HasMany(u => u.Listings).WithOne(l => l.User);
 
 
         }

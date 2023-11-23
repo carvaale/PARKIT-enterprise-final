@@ -18,6 +18,30 @@ namespace PARKIT_enterprise_final.Controllers
         }
 
         [HttpGet]
+        public IActionResult AllListings()
+        {
+            return View(_listingProvider.GetListings());
+        }
+
+
+
+        [HttpGet]
+        public IActionResult UpdateListing(Guid id)
+        {
+            return View(_listingProvider.GetById(id));
+        }
+        [HttpPost]
+        public IActionResult UpdateListing(Listing listing)
+        {
+            if (ModelState.IsValid)
+            {
+                _listingProvider.UpdateListing(listing);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult CreateListing()
         {
             return View();
@@ -33,9 +57,11 @@ namespace PARKIT_enterprise_final.Controllers
                     {
                         StreetAddress = listing["Address.StreetAddress"],
                         City = listing["Address.City"],
-                        ZipCode = listing["Address.ZipCode"]
+                        ZipCode = listing["Address.ZipCode"],
+                        Longitude = "Test", // going to try to get the longitude and latitude from the address
+                        Latitude = "Test"
                     },
-                    IsAvailable = true,
+                    IsAvailable = listing["IsAvailable"].Count > 0 ? true : false, // this needs to be fixed
                     StartTime = TimeSpan.Parse(listing["StartTime"]),
                     EndTime = TimeSpan.Parse(listing["EndTime"]),
                     Price = double.Parse(listing["Price"])
