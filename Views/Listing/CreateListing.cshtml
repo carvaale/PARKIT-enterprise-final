@@ -7,7 +7,7 @@
 <h1>Create Listing</h1>
 
 <div>
-    <form asp-action="CreateListing" method="post">
+    <form asp-action="CreateListing" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="All"></div>
         <p>
             <label asp-for="Address.StreetAddress">Street Address</label>
@@ -20,12 +20,11 @@
         </p>
 
         <p>
-            <label asp-for="Address.ZipCode">Province</label>
+            <label asp-for="Address.ZipCode">ZipCode</label>
             <input asp-for="Address.ZipCode" />
         </p>
 
         <p>
-            @* Create input for startime and endtime and accept the input through a timespan*@
             <label asp-for="StartTime">Start Time</label>
             <input asp-for="StartTime" type="time"/>
         </p>
@@ -34,12 +33,21 @@
             <input asp-for="EndTime" type="time" />
         </p>
         <p>
-            <label asp-for="Price">Price</label>
+            <label asp-for="Price">Price per hour</label>
             <input asp-for="Price" />
         </p>
         <p>
             <label asp-for="IsAvailable">Is Available</label>
             <input asp-for="IsAvailable" type="checkbox" />
         </p>
+
+        <p>
+            
+            <label asp-for="Files">Upload images</label>
+            <input asp-for="Files" type="file" multiple />
+            
+
+        </p>
+        <button type="submit">Submit</button>
     </form>
 </div>

@@ -11,8 +11,8 @@ using PARKIT_enterprise_final.Models.DBContext;
 namespace PARKIT_enterprise_final.Migrations
 {
     [DbContext(typeof(PARKITDBContext))]
-    [Migration("20231118163614_Listings-Migration")]
-    partial class ListingsMigration
+    [Migration("20231122231629_Initial-Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,8 +58,9 @@ namespace PARKIT_enterprise_final.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("ZipCode")
-                                .HasColumnType("INTEGER");
+                            b1.Property<string>("ZipCode")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
 
                             b1.HasKey("ListingId");
 
@@ -71,9 +72,6 @@ namespace PARKIT_enterprise_final.Migrations
 
                     b.OwnsMany("PARKIT_enterprise_final.Models.Image", "Images", b1 =>
                         {
-                            b1.Property<Guid>("ListingId")
-                                .HasColumnType("TEXT");
-
                             b1.Property<Guid>("Id")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("TEXT");
@@ -82,12 +80,19 @@ namespace PARKIT_enterprise_final.Migrations
                                 .IsRequired()
                                 .HasColumnType("BLOB");
 
-                            b1.HasKey("ListingId", "Id");
+                            b1.Property<Guid>("ListingId")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ListingId");
 
                             b1.ToTable("Images");
 
-                            b1.WithOwner()
+                            b1.WithOwner("Listing")
                                 .HasForeignKey("ListingId");
+
+                            b1.Navigation("Listing");
                         });
 
                     b.Navigation("Address")

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PARKIT_enterprise_final.Migrations
 {
     /// <inheritdoc />
-    public partial class ListingsMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace PARKIT_enterprise_final.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Address_StreetAddress = table.Column<string>(type: "TEXT", nullable: false),
                     Address_City = table.Column<string>(type: "TEXT", nullable: false),
-                    Address_ZipCode = table.Column<int>(type: "INTEGER", nullable: false),
+                    Address_ZipCode = table.Column<string>(type: "TEXT", nullable: false),
                     IsAvailable = table.Column<bool>(type: "INTEGER", nullable: false),
                     StartTime = table.Column<TimeSpan>(type: "TEXT", nullable: false),
                     EndTime = table.Column<TimeSpan>(type: "TEXT", nullable: false),
@@ -34,12 +34,12 @@ namespace PARKIT_enterprise_final.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ListingId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ImageData = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    ImageData = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    ListingId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => new { x.ListingId, x.Id });
+                    table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Images_Listings_ListingId",
                         column: x => x.ListingId,
@@ -47,6 +47,11 @@ namespace PARKIT_enterprise_final.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_ListingId",
+                table: "Images",
+                column: "ListingId");
         }
 
         /// <inheritdoc />

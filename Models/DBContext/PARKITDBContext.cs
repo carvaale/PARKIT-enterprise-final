@@ -17,6 +17,7 @@ namespace PARKIT_enterprise_final.Models.DBContext
             modelBuilder.Entity<Listing>().OwnsOne(l => l.Address);
             modelBuilder.Entity<Listing>().OwnsMany(l => l.Images);
 
+
         }
     }
 }
