@@ -11,10 +11,11 @@
 
 <script>
     async function initMap() {
-        // Request needed libraries.
+        // Request needed libraries
         const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
+        // Create the map
         var map = new Map(document.getElementById('map'), {
             zoom: 12,
             center: { lat: 43.65804053299989, lng: -79.4349384105354 },
@@ -22,7 +23,8 @@
             disableDefaultUI: true,
         });
 
-        const tourStops = [
+        // Create the list of listings to be loaded onto the map
+        const listings = [
             @for (int i = 0; i < Model.Count(); i++)
 			{
 				<text>
@@ -39,12 +41,12 @@
 
 
         // Create the markers.
-        tourStops.forEach((location, i) => {
+        listings.forEach((location, i) => {
             const parkingImg = document.createElement("img");
             parkingImg.src = "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_parking_park-1024.png"
             parkingImg.style.width = "50px";
 
-
+            // Create a marker for each location.
             const marker = new AdvancedMarkerElement({
                 position: location.position,
                 map,
