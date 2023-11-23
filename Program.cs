@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using PARKIT_enterprise_final.Models.DBContext;
+using PARKIT_enterprise_final.Models.Interfaces;
+using PARKIT_enterprise_final.Models.Operations;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IListingsProvider, ListingOperations>();
+
+builder.Services.AddDbContext<PARKITDBContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("PARKITDB")));
 
 var app = builder.Build();
 

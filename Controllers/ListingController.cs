@@ -1,31 +1,51 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PARKIT_enterprise_final.Models;
 using PARKIT_enterprise_final.Models.Interfaces;
-using System.Diagnostics;
 
 namespace PARKIT_enterprise_final.Controllers
 {
-    public class HomeController : Controller
+    public class ListingController : Controller
     {
         private readonly IListingsProvider _listingProvider;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IListingsProvider listingsProvider)
+        public ListingController(IListingsProvider listingsProvider)
         {
-            _logger = logger;
             _listingProvider = listingsProvider;
         }
-
         public IActionResult Index()
         {
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult AllListings()
+        {
+            return View(_listingProvider.GetListings());
+        }
+
+
+
+        [HttpGet]
+        public IActionResult UpdateListing(Guid id)
+        {
+            return View(_listingProvider.GetById(id));
+        }
+        [HttpPost]
+        public IActionResult UpdateListing(Listing listing)
+        {
+            if (ModelState.IsValid)
+            {
+                _listingProvider.UpdateListing(listing);
+                return RedirectToAction("Index");
+            }
             return View();
         }
+
         [HttpGet]
         public IActionResult CreateListing()
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult CreateListing(IFormCollection listing)
         {
@@ -37,20 +57,22 @@ namespace PARKIT_enterprise_final.Controllers
                     {
                         StreetAddress = listing["Address.StreetAddress"],
                         City = listing["Address.City"],
-                        ZipCode = listing["Address.ZipCode"]
+                        ZipCode = listing["Address.ZipCode"],
+                        Longitude = "Test", // going to try to get the longitude and latitude from the address
+                        Latitude = "Test"
                     },
-                    IsAvailable = true,
+                    IsAvailable = listing["IsAvailable"].Count > 0 ? true : false, // this needs to be fixed
                     StartTime = TimeSpan.Parse(listing["StartTime"]),
                     EndTime = TimeSpan.Parse(listing["EndTime"]),
                     Price = double.Parse(listing["Price"])
                 };
 
                 var files = listing.Files;
-                
+
                 List<Image> images = new List<Image>();
                 foreach (var file in files)
                 {
-                       using (var ms = new MemoryStream())
+                    using (var ms = new MemoryStream())
                     {
                         file.CopyTo(ms);
                         var fileBytes = ms.ToArray();
@@ -64,17 +86,6 @@ namespace PARKIT_enterprise_final.Controllers
 
             }
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
