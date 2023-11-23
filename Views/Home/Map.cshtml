@@ -11,7 +11,7 @@
 
 <script>
     async function initMap() {
-        // Request needed libraries
+        // Get Google Maps API libraries
         const { Map, InfoWindow } = await google.maps.importLibrary("maps");
         const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
@@ -43,7 +43,8 @@
         // Create the markers.
         listings.forEach((location, i) => {
             const parkingImg = document.createElement("img");
-            parkingImg.src = "https://cdn4.iconfinder.com/data/icons/map-pins-7/64/map_pin_pointer_location_navigation_parking_park-1024.png"
+            // get from local images folder
+            parkingImg.src = "/images/parking-icon.png";
             parkingImg.style.width = "50px";
 
             // Create a marker for each location.
