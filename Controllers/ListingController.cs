@@ -1,31 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PARKIT_enterprise_final.Models;
 using PARKIT_enterprise_final.Models.Interfaces;
-using System.Diagnostics;
 
 namespace PARKIT_enterprise_final.Controllers
 {
-    public class HomeController : Controller
+    public class ListingController : Controller
     {
         private readonly IListingsProvider _listingProvider;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IListingsProvider listingsProvider)
+        public ListingController(IListingsProvider listingsProvider)
         {
-            _logger = logger;
             _listingProvider = listingsProvider;
         }
-
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
+
         [HttpGet]
         public IActionResult CreateListing()
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult CreateListing(IFormCollection listing)
         {
@@ -46,11 +42,11 @@ namespace PARKIT_enterprise_final.Controllers
                 };
 
                 var files = listing.Files;
-                
+
                 List<Image> images = new List<Image>();
                 foreach (var file in files)
                 {
-                       using (var ms = new MemoryStream())
+                    using (var ms = new MemoryStream())
                     {
                         file.CopyTo(ms);
                         var fileBytes = ms.ToArray();
@@ -64,17 +60,6 @@ namespace PARKIT_enterprise_final.Controllers
 
             }
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
