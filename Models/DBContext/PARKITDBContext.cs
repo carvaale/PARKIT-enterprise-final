@@ -10,6 +10,8 @@ namespace PARKIT_enterprise_final.Models.DBContext
         }
 
         public DbSet<Listing> Listings { get; set; }
+
+        public DbSet<Booking> Bookings { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<User> Users { get; set; }
 
