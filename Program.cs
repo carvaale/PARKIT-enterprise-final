@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IListingsProvider, ListingOperations>();
+builder.Services.AddScoped<IBookingProvider, BookingOperations>();
 
 builder.Services.AddDbContext<PARKITDBContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("PARKITDB")));
