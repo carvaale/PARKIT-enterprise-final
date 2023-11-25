@@ -14,7 +14,7 @@ namespace PARKIT_enterprise_final.Controllers
         }
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AllListings");
         }
 
         [HttpGet]
@@ -23,6 +23,24 @@ namespace PARKIT_enterprise_final.Controllers
             return View(_listingProvider.GetListings());
         }
 
+        [HttpGet]
+        public IActionResult DeleteListing(Guid id)
+        {
+            return View(_listingProvider.GetById(id));
+        }
+
+        [HttpPost]
+        public IActionResult DeleteListing(Listing listing)
+        {
+            _listingProvider.DeleteListing(listing);
+            return RedirectToAction("AllListings");
+        }
+
+        [HttpGet]
+        public IActionResult ListingDetails(Guid id)
+        {
+            return View(_listingProvider.GetById(id));
+        }
 
 
         [HttpGet]
@@ -51,8 +69,47 @@ namespace PARKIT_enterprise_final.Controllers
         {
             if (ModelState.IsValid)
             {
+                Wallet w1 = new Wallet 
+                { 
+                    WalletId = Guid.NewGuid(), 
+                    cardHolderName = "test", 
+                    cardNumber = "test" 
+                };
+
+                Address a1 = new Address
+                {
+                    AddressId = Guid.NewGuid(),
+                    City = "Test",
+                    StreetAddress = "Test",
+                    ZipCode = "Test",
+                    Latitude = "test",
+                    Longitude = "test",
+                };
+                User u1 = new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "Test",
+                    Password = "Test",
+                    Phone = "Test",
+                    Username = "Test",
+                    Wallet = w1,
+                    Address = a1
+                };
+                string IAString = listing["IsAvailable"];
+                bool IABool; 
+                if (IAString == "false")
+                {
+                    IABool = false;
+                }
+                else
+                {
+                    IABool = true;
+                }
                 Listing newListing = new Listing
                 {
+                    User = u1,
                     Address = new Address
                     {
                         StreetAddress = listing["Address.StreetAddress"],
@@ -61,7 +118,7 @@ namespace PARKIT_enterprise_final.Controllers
                         Longitude = "Test", // going to try to get the longitude and latitude from the address
                         Latitude = "Test"
                     },
-                    IsAvailable = listing["IsAvailable"].Count > 0 ? true : false, // this needs to be fixed
+                    IsAvailable = IABool,
                     StartTime = TimeSpan.Parse(listing["StartTime"]),
                     EndTime = TimeSpan.Parse(listing["EndTime"]),
                     Price = double.Parse(listing["Price"])
@@ -81,7 +138,7 @@ namespace PARKIT_enterprise_final.Controllers
                 }
                 newListing.Images = images;
                 _listingProvider.AddListing(newListing);
-                return RedirectToAction("Index");
+                return RedirectToAction("AllListings");
 
 
             }

@@ -6,11 +6,15 @@
 
         Listing UpdateListing(Listing listing);
 
+        void DeleteListing(Listing listing);
+
         Image AddImage(Image image);
 
         Listing GetById(Guid id);
 
         List<Listing> GetListings();
+
+
         
 
 
