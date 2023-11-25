@@ -39,24 +39,33 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult ListingDetails(Guid id)
         {
-            return View(_listingProvider.GetById(id));
+            Listing listing = _listingProvider.GetById(id);
+            ViewBag.Images = _listingProvider.GetImagesByListingId(id);
+
+            return View(listing);
         }
 
 
         [HttpGet]
         public IActionResult UpdateListing(Guid id)
         {
+
             return View(_listingProvider.GetById(id));
         }
         [HttpPost]
         public IActionResult UpdateListing(Listing listing)
         {
-            if (ModelState.IsValid)
-            {
-                _listingProvider.UpdateListing(listing);
-                return RedirectToAction("Index");
-            }
-            return View();
+            Listing newListing = _listingProvider.GetById(listing.Id);
+
+            newListing.IsAvailable = listing.IsAvailable;
+            newListing.StartTime = listing.StartTime;
+            newListing.EndTime = listing.EndTime;
+            newListing.Price = listing.Price;
+
+            
+            _listingProvider.UpdateListing(newListing);
+
+            return RedirectToAction("AllListings");
         }
 
         [HttpGet]
