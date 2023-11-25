@@ -1,0 +1,84 @@
+﻿@using PARKIT_enterprise_final.ViewModels
+
+@model ListingDetailsViewModel
+@{
+    var images = Model.Listing.Images;
+    var address = Model.Listing.Address;
+    var owner = Model.Listing.User;
+    var wallet = Model.Listing.User.Wallet;
+}
+<style>
+    /* styles to limit size of carousel images */
+    #listingImagesCarousel .carousel-item img {
+        max-height: 400px; 
+        width: auto; 
+        margin: 0 auto; 
+    }
+</style>
+
+<div class="container mt-3">
+    <!-- Carousel for images -->
+    <div id="listingImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var image in images)
+            {
+                <div class="carousel-item @(image == images.First() ? "active" : "")">
+                    <img src="data:image/png;base64,@Convert.ToBase64String(image.ImageData)" class="d-block" alt="Listing Image">
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#listingImagesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Address and Spot Owner Details -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h3>Address</h3>
+            <p>@address.StreetAddress</p>
+            <p>@address.City, @address.ZipCode</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Spot Owner Details</h3>
+            <p>Username: @owner.Username</p>
+            <p>Phone: @owner.Phone</p>
+        </div>
+    </div>
+
+    <!-- Booking Section -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h3>Payment Information</h3>
+            <p>Card Name: @* @wallet.cardHolderName *@</p>
+            <p>Card Number: @* @wallet.cardNumber *@</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Book This Spot</h3>
+            <form method="post" action="@Url.Action("ReserveSpot", "Booking")">
+                <!-- Hidden field for Listing ID -->
+                @Html.HiddenFor(m => m.Listing.Id)
+
+                <div class="mb-3">
+                    <label for="carInput" class="form-label">Car License Plate</label>
+                    <input type="text" id="carInput" class="form-control" name="carLicensePlate" required placeholder="Enter Car License Plate" />
+                </div>
+
+                <!-- Input for number of hours -->
+                <div class="mb-3">
+                    <label for="hoursSelection" class="form-label">Hours</label>
+                    <input type="number" id="hoursSelection" class="form-control" name="hours" min="1" required />
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary">Reserve</button>
+            </form>
+        </div>
+    </div>
+</div>
+

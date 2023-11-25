@@ -2,7 +2,7 @@
 {
     public interface IUserProvider
     {
-        User GetUser(int userId);
+        User GetUser(Guid userId);
         User AddUser(User user);
         User UpdateUser(User user);
     }
