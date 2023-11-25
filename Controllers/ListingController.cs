@@ -93,12 +93,12 @@ namespace PARKIT_enterprise_final.Controllers
                 User u1 = new User
                 {
                     Id = Guid.NewGuid(),
-                    FirstName = "Test",
-                    LastName = "Test",
+                    FirstName = "Bob",
+                    LastName = "DaBuilder",
                     Email = "Test",
                     Password = "Test",
-                    Phone = "Test",
-                    Username = "Test",
+                    Phone = "000-111-2222",
+                    Username = "Bob",
                     Wallet = w1,
                     Address = a1
                 };
