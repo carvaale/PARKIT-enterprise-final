@@ -14,7 +14,7 @@ namespace PARKIT_enterprise_final.Controllers
         }
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AllListings");
         }
 
         [HttpGet]
@@ -23,22 +23,44 @@ namespace PARKIT_enterprise_final.Controllers
             return View(_listingProvider.GetListings());
         }
 
+        [HttpGet]
+        public IActionResult DeleteListing(Guid id)
+        {
+            return View(_listingProvider.GetById(id));
+        }
+
+        [HttpPost]
+        public IActionResult DeleteListing(Listing listing)
+        {
+            _listingProvider.DeleteListing(listing);
+            return RedirectToAction("AllListings");
+        }
+
+        [HttpGet]
+        public IActionResult ListingDetails(Guid id)
+        {
+            Listing listing = _listingProvider.GetById(id);
+            ViewBag.Images = _listingProvider.GetImagesByListingId(id);
+
+            return View(listing);
+        }
 
 
         [HttpGet]
         public IActionResult UpdateListing(Guid id)
         {
-            return View(_listingProvider.GetById(id));
+            Listing listing = _listingProvider.GetById(id);
+            ViewBag.Images = _listingProvider.GetImagesByListingId(id);
+
+            return View(listing);
         }
         [HttpPost]
-        public IActionResult UpdateListing(Listing listing)
+        public IActionResult UpdateListing(IFormCollection listing)
         {
-            if (ModelState.IsValid)
-            {
-                _listingProvider.UpdateListing(listing);
-                return RedirectToAction("Index");
-            }
-            return View();
+
+            _listingProvider.UpdateListing(listing); ;
+
+            return RedirectToAction("AllListings");
         }
 
         [HttpGet]
@@ -51,37 +73,38 @@ namespace PARKIT_enterprise_final.Controllers
         {
             if (ModelState.IsValid)
             {
-                Listing newListing = new Listing
-                {
-                    Address = new Address
-                    {
-                        StreetAddress = listing["Address.StreetAddress"],
-                        City = listing["Address.City"],
-                        ZipCode = listing["Address.ZipCode"],
-                        Longitude = "Test", // going to try to get the longitude and latitude from the address
-                        Latitude = "Test"
-                    },
-                    IsAvailable = listing["IsAvailable"].Count > 0 ? true : false, // this needs to be fixed
-                    StartTime = TimeSpan.Parse(listing["StartTime"]),
-                    EndTime = TimeSpan.Parse(listing["EndTime"]),
-                    Price = double.Parse(listing["Price"])
+                // Wallet, Address and User are all temporary until we figure out how to get the user id from the session, this is just for testing purposes
+                Wallet w1 = new Wallet 
+                { 
+                    WalletId = Guid.NewGuid(), 
+                    cardHolderName = "test", 
+                    cardNumber = "test" 
                 };
 
-                var files = listing.Files;
-
-                List<Image> images = new List<Image>();
-                foreach (var file in files)
+                Address a1 = new Address
                 {
-                    using (var ms = new MemoryStream())
-                    {
-                        file.CopyTo(ms);
-                        var fileBytes = ms.ToArray();
-                        images.Add(new Image { ImageData = fileBytes, ListingId = newListing.Id });
-                    }
-                }
-                newListing.Images = images;
-                _listingProvider.AddListing(newListing);
-                return RedirectToAction("Index");
+                    AddressId = Guid.NewGuid(),
+                    City = "Test",
+                    StreetAddress = "Test",
+                    ZipCode = "Test",
+                    Latitude = "test",
+                    Longitude = "test",
+                };
+                User u1 = new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "Test",
+                    Password = "Test",
+                    Phone = "Test",
+                    Username = "Test",
+                    Wallet = w1,
+                    Address = a1
+                };
+
+                _listingProvider.AddListing(listing, u1);
+                return RedirectToAction("AllListings");
 
 
             }

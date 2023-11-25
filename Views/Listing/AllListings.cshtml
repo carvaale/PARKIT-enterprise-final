@@ -7,14 +7,14 @@
 <h1>AllListings</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateListing">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IsAvailable)
-            </th>
+                @Html.DisplayNameFor(model => model.Address.StreetAddress)
+            
             <th>
                 @Html.DisplayNameFor(model => model.StartTime)
             </th>
@@ -24,14 +24,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBooked)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.IsAvailable)
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (Listing item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IsAvailable)
+                @Html.DisplayFor(modelItem => item.Address.StreetAddress)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
@@ -43,9 +48,15 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <a asp-action="UpdateListing" asp-route-id="@item.Id">Edit @item.Id</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.IsBooked)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAvailable)
+            </td>
+            <td>
+                <a asp-action="UpdateListing" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="ListingDetails" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DeleteListing" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
