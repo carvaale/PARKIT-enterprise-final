@@ -26,6 +26,12 @@ namespace PARKIT_enterprise_final.Models.Operations
             return listing;
         }
 
+        public void DeleteListing(Listing listing)
+        {
+            _context.Listings.Remove(listing);
+            _context.SaveChanges();
+        }
+
         public Listing GetById(Guid id)
         {
             Listing listing = _context.Listings.Find(id);

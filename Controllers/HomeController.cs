@@ -20,13 +20,13 @@ namespace PARKIT_enterprise_final.Controllers
         {
             return View();
         }
-        [HttpGet]
+/*        [HttpGet]
         public IActionResult CreateListing()
         {
             return View();
-        }
+        }*/
 
-        [HttpPost]
+/*        [HttpPost]
         public IActionResult CreateListing(IFormCollection listing)
         {
             if (ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace PARKIT_enterprise_final.Controllers
 
             }
             return View();
-        }
+        }*/
 
         public IActionResult Map()
         {

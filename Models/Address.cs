@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace PARKIT_enterprise_final.Models
 {
     [Owned]
     public class Address
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid AddressId { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
