@@ -20,11 +20,52 @@ namespace PARKIT_enterprise_final.Models.Operations
             return image;
         }
 
-        public Listing AddListing(Listing listing)
+        public Listing AddListing(IFormCollection listing, User user)
         {
-            _context.Listings.Add(listing);
+            string IAString = listing["IsAvailable"];
+            bool IABool;
+            if (IAString == "false")
+            {
+                IABool = false;
+            }
+            else
+            {
+                IABool = true;
+            }
+            Listing newListing = new Listing
+            {
+                User = user,
+                Address = new Address
+                {
+                    StreetAddress = listing["Address.StreetAddress"],
+                    City = listing["Address.City"],
+                    ZipCode = listing["Address.ZipCode"],
+                    Longitude = "Test", // going to try to get the longitude and latitude from the address
+                    Latitude = "Test"
+                },
+                IsAvailable = IABool,
+                StartTime = TimeSpan.Parse(listing["StartTime"]),
+                EndTime = TimeSpan.Parse(listing["EndTime"]),
+                Price = double.Parse(listing["Price"])
+            };
+
+            var files = listing.Files;
+
+            List<Image> images = new List<Image>();
+            foreach (var file in files)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    images.Add(new Image { ImageData = fileBytes, ListingId = newListing.Id });
+                }
+            }
+            newListing.Images = images;
+
+            _context.Listings.Add(newListing);
             _context.SaveChanges();
-            return listing;
+            return newListing;
         }
 
         public void DeleteListing(Listing listing)
@@ -75,11 +116,44 @@ namespace PARKIT_enterprise_final.Models.Operations
             return imageString;
         }
 
-        public Listing UpdateListing(Listing listing)
+        public Listing UpdateListing(IFormCollection listing) // Need to add the ability to remove the images that are already in the db for the provided listing
         {
-            _context.Listings.Update(listing);
+            
+            string IAString = listing["IsAvailable"];
+            bool IABool;
+            if (IAString == "false")
+            {
+                IABool = false;
+            }
+            else
+            {
+                IABool = true;
+            }
+            Listing newListing = _context.Listings.Find(Guid.Parse(listing["Id"]));
+
+            newListing.IsAvailable = IABool;
+            newListing.StartTime = TimeSpan.Parse(listing["StartTime"]);
+            newListing.EndTime = TimeSpan.Parse(listing["EndTime"]);
+            newListing.Price = double.Parse(listing["Price"]);
+
+            var files = listing.Files;
+
+            List<Image> images = new List<Image>();
+            foreach (var file in files)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    images.Add(new Image { ImageData = fileBytes, ListingId = newListing.Id });
+                }
+            }
+            newListing.Images = images;
+
+
+            _context.Listings.Update(newListing);
             _context.SaveChanges();
-            return listing;
+            return newListing;
         }
     }
 }

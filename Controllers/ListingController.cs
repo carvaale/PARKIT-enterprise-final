@@ -49,21 +49,16 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult UpdateListing(Guid id)
         {
+            Listing listing = _listingProvider.GetById(id);
+            ViewBag.Images = _listingProvider.GetImagesByListingId(id);
 
-            return View(_listingProvider.GetById(id));
+            return View(listing);
         }
         [HttpPost]
-        public IActionResult UpdateListing(Listing listing)
+        public IActionResult UpdateListing(IFormCollection listing)
         {
-            Listing newListing = _listingProvider.GetById(listing.Id);
 
-            newListing.IsAvailable = listing.IsAvailable;
-            newListing.StartTime = listing.StartTime;
-            newListing.EndTime = listing.EndTime;
-            newListing.Price = listing.Price;
-
-            
-            _listingProvider.UpdateListing(newListing);
+            _listingProvider.UpdateListing(listing); ;
 
             return RedirectToAction("AllListings");
         }
@@ -78,6 +73,7 @@ namespace PARKIT_enterprise_final.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Wallet, Address and User are all temporary until we figure out how to get the user id from the session, this is just for testing purposes
                 Wallet w1 = new Wallet 
                 { 
                     WalletId = Guid.NewGuid(), 
@@ -106,47 +102,8 @@ namespace PARKIT_enterprise_final.Controllers
                     Wallet = w1,
                     Address = a1
                 };
-                string IAString = listing["IsAvailable"];
-                bool IABool; 
-                if (IAString == "false")
-                {
-                    IABool = false;
-                }
-                else
-                {
-                    IABool = true;
-                }
-                Listing newListing = new Listing
-                {
-                    User = u1,
-                    Address = new Address
-                    {
-                        StreetAddress = listing["Address.StreetAddress"],
-                        City = listing["Address.City"],
-                        ZipCode = listing["Address.ZipCode"],
-                        Longitude = "Test", // going to try to get the longitude and latitude from the address
-                        Latitude = "Test"
-                    },
-                    IsAvailable = IABool,
-                    StartTime = TimeSpan.Parse(listing["StartTime"]),
-                    EndTime = TimeSpan.Parse(listing["EndTime"]),
-                    Price = double.Parse(listing["Price"])
-                };
 
-                var files = listing.Files;
-
-                List<Image> images = new List<Image>();
-                foreach (var file in files)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        file.CopyTo(ms);
-                        var fileBytes = ms.ToArray();
-                        images.Add(new Image { ImageData = fileBytes, ListingId = newListing.Id });
-                    }
-                }
-                newListing.Images = images;
-                _listingProvider.AddListing(newListing);
+                _listingProvider.AddListing(listing, u1);
                 return RedirectToAction("AllListings");
 
 

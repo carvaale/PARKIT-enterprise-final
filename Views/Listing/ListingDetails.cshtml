@@ -40,15 +40,27 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        <dt class = "col-sm-2">
+@*         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.User)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.User.Id)
+        </dd> *@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Images)
+        </dt>
+        <dd class="col-sm-10">
+        @foreach (var item in ViewBag.Images)
+            {
+                <img src="data:image/PNG;base64, @item" alt="No Image Found" width="30" />
+            }
         </dd>
+
+
+        
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="UpdateListing" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="AllListings">Back to List</a>
 </div>
