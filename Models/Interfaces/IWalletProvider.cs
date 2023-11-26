@@ -2,7 +2,7 @@
 {
     public interface IWalletProvider
     {
-        Wallet GetWallet(int userId);
+        Wallet GetWallet(Guid userId);
         Wallet AddWallet(Wallet wallet);
         Wallet UpdateWallet(Wallet wallet);
     }

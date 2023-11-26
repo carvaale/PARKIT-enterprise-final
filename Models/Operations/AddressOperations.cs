@@ -18,7 +18,7 @@ namespace PARKIT_enterprise_final.Models.Operations
             return address;
         }
 
-        public Address GetAddress(int userId)
+        public Address GetAddress(Guid userId)
         {
             return _parkitDb.Addresses.Find(userId);
         }

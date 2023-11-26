@@ -2,7 +2,7 @@
 {
     public interface IAddressOperations
     {
-        Address GetAddress(int userId);
+        Address GetAddress(Guid userId);
         Address AddAddress(Address address);
         Address UpdateAddress(Address address);
     }

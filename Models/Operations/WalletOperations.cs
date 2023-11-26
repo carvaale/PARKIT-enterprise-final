@@ -18,7 +18,7 @@ namespace PARKIT_enterprise_final.Models.Operations
             return wallet;
         }
 
-        public Wallet GetWallet(int userId)
+        public Wallet GetWallet(Guid userId)
         {
             return _parkitDb.Wallets.Find(userId);
         }

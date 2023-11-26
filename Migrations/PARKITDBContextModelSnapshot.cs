@@ -108,17 +108,28 @@ namespace PARKIT_enterprise_final.Migrations
                     b.Property<Guid>("WalletId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("cardHolderName")
+                    b.Property<string>("CardHolderName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("cardNumber")
+                    b.Property<string>("CardNumber")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("WalletId");
 
                     b.ToTable("Wallets");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Booking", b =>
+                {
+                    b.HasOne("PARKIT_enterprise_final.Models.Listing", "Listing")
+                        .WithMany()
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Listing");
                 });
 
             modelBuilder.Entity("PARKIT_enterprise_final.Models.Listing", b =>
@@ -138,15 +149,10 @@ namespace PARKIT_enterprise_final.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Id")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<string>("Latitude")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Longitude")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("StreetAddress")
@@ -209,15 +215,10 @@ namespace PARKIT_enterprise_final.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.Property<int>("Id")
-                                .HasColumnType("INTEGER");
-
                             b1.Property<string>("Latitude")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Longitude")
-                                .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("StreetAddress")
@@ -230,7 +231,7 @@ namespace PARKIT_enterprise_final.Migrations
 
                             b1.HasKey("AddressId");
 
-                            b1.ToTable("Wallets");
+                            b1.ToTable("Users");
 
                             b1.WithOwner()
                                 .HasForeignKey("AddressId");
