@@ -26,7 +26,7 @@ namespace PARKIT_enterprise_final.Models.DBContext
             modelBuilder.Entity<Listing>().OwnsMany(l => l.Images);
 
 
-            // modelBuilder.Entity<User>().OwnsOne(u => u.Address);
+            modelBuilder.Entity<User>().OwnsOne(u => u.Address);
             // modelBuilder.Entity<User>().HasOne(u => u.Address).WithOne().HasForeignKey<Address>();
             modelBuilder.Entity<User>().HasOne(u => u.Wallet).WithOne().HasForeignKey<Wallet>();
             modelBuilder.Entity<User>().HasMany(u => u.Listings).WithOne(l => l.User);
