@@ -2,8 +2,10 @@
 {
     public interface IUserProvider
     {
+        List<User> GetUsers();
         User GetUser(Guid userId);
-        User AddUser(User user);
+        User CreateUser(User user);
         User UpdateUser(User user);
+        void DeleteUser(User user);
     }
 }

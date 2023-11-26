@@ -2,8 +2,10 @@
 {
     public interface IWalletProvider
     {
-        Wallet GetWallet(int userId);
+        List<Wallet> GetWallets();
+        Wallet GetWallet(Guid userId);
         Wallet AddWallet(Wallet wallet);
         Wallet UpdateWallet(Wallet wallet);
+        void DeleteWallet(Guid id);
     }
 }
