@@ -17,10 +17,5 @@
         string GetSingleImageByListingId(Guid id);
 
         List<string> GetImagesByListingId(Guid id);
-
-
-        
-
-
     }
 }

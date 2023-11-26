@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PARKIT_enterprise_final.Models.DBContext;
 using PARKIT_enterprise_final.Models.Interfaces;
 using PARKIT_enterprise_final.Models.Operations;
+using PARKIT_enterprise_final.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IListingsProvider, ListingOperations>();
 builder.Services.AddScoped<IBookingProvider, BookingOperations>();
+
+builder.Services.AddHttpClient<GeocodeApi>();
+
 
 builder.Services.AddDbContext<PARKITDBContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("PARKITDB")));

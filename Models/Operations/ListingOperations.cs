@@ -1,5 +1,6 @@
 ﻿using PARKIT_enterprise_final.Models.DBContext;
 using PARKIT_enterprise_final.Models.Interfaces;
+using PARKIT_enterprise_final.Utils;
 using System.Reflection;
 
 namespace PARKIT_enterprise_final.Models.Operations
@@ -7,10 +8,13 @@ namespace PARKIT_enterprise_final.Models.Operations
     public class ListingOperations : IListingsProvider
     {
         private readonly PARKITDBContext _context;
+        private readonly GeocodeApi _geocodeApi;
 
-        public ListingOperations(PARKITDBContext context)
+
+        public ListingOperations(PARKITDBContext context, GeocodeApi geocodeApi)
         {
             _context = context;
+            _geocodeApi = geocodeApi;
         }
 
         public Image AddImage(Image image)
@@ -32,6 +36,11 @@ namespace PARKIT_enterprise_final.Models.Operations
             {
                 IABool = true;
             }
+
+
+            // Get the longitude and latitude from the address
+            LatLng latLng = _geocodeApi.GetGeocode(listing["Address.StreetAddress"]).Result;
+
             Listing newListing = new Listing
             {
                 User = user,
@@ -40,8 +49,12 @@ namespace PARKIT_enterprise_final.Models.Operations
                     StreetAddress = listing["Address.StreetAddress"],
                     City = listing["Address.City"],
                     ZipCode = listing["Address.ZipCode"],
-                    Longitude = "Test", // going to try to get the longitude and latitude from the address
-                    Latitude = "Test"
+                    Longitude = latLng.Lng,
+                    Latitude = latLng.Lat
+
+                    // Idk wtf this is doing - Alex
+                    //Longitude = "Test", // going to try to get the longitude and latitude from the address 
+                    //Latitude = "Test"
                 },
                 IsAvailable = IABool,
                 StartTime = TimeSpan.Parse(listing["StartTime"]),
