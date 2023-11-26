@@ -4,7 +4,18 @@
 }
 
 <div class="side-bar">
-    @*logic for listings pulled from DB*@
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <div class="listing">
+@*          <img src="@Model.ElementAt(i).Image" /> *@
+            <div class="">
+                <span>@Model.ElementAt(i).Address.StreetAddress</span>
+                <span>@Model.ElementAt(i).Address.City</span>
+                <span>@Model.ElementAt(i).Address.ZipCode</span>
+                <span>@Model.ElementAt(i).Price</span>
+            </div>
+        </div>
+    }
 </div>
 
 <div id="map" class="map" />
@@ -29,6 +40,7 @@
 			{
 				<text>
 					{
+                        id: "@Model.ElementAt(i).Id",
                         position: { lat: @Convert.ToDouble(Model.ElementAt(i).Address.Latitude), lng: @Convert.ToDouble(Model.ElementAt(i).Address.Longitude) },
 					    title: "@Model.ElementAt(i).Address.StreetAddress",
 					},
@@ -45,13 +57,12 @@
             const parkingImg = document.createElement("img");
             // get from local images folder
             parkingImg.src = "/images/parking-icon.png";
-            parkingImg.style.width = "50px";
+            parkingImg.style.width = "40px";
 
             // Create a marker for each location.
             const marker = new AdvancedMarkerElement({
                 position: location.position,
                 map,
-                title: `${i + 1}. ${location.title}`,
                 content: parkingImg,
             });
 
@@ -60,8 +71,7 @@
                 const { target } = domEvent;
 
                 infoWindow.close();
-                infoWindow.setContent(marker.title);
-                infoWindow.open(marker.map, marker);
+                window.location.href = "/Listing/ListingDetails/" + location.id;
             });
         });
     }
