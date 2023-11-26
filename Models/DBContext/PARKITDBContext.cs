@@ -10,15 +10,14 @@ namespace PARKIT_enterprise_final.Models.DBContext
         }
 
         public DbSet<Listing> Listings { get; set; }
-
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<User> Users { get; set; }
 
-        // Didnt add to onmodelCreating function
+        // Didn't add to onmodelCreating function
         public DbSet<Address> Addresses { get; set; }
 
-        // Didnt add to onmodelCreating function
+        // Didn't add to onmodelCreating function
         public DbSet<Wallet> Wallets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,7 +26,8 @@ namespace PARKIT_enterprise_final.Models.DBContext
             modelBuilder.Entity<Listing>().OwnsMany(l => l.Images);
 
 
-            modelBuilder.Entity<User>().OwnsOne(u => u.Address);
+            // modelBuilder.Entity<User>().OwnsOne(u => u.Address);
+            // modelBuilder.Entity<User>().HasOne(u => u.Address).WithOne().HasForeignKey<Address>();
             modelBuilder.Entity<User>().HasOne(u => u.Wallet).WithOne().HasForeignKey<Wallet>();
             modelBuilder.Entity<User>().HasMany(u => u.Listings).WithOne(l => l.User);
 

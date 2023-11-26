@@ -18,9 +18,22 @@ namespace PARKIT_enterprise_final.Models.Operations
             return wallet;
         }
 
+        public void DeleteWallet(Guid id)
+        {
+            var wallet = GetWallet(id);
+            _parkitDb.Wallets.Remove(wallet);
+            _parkitDb.SaveChanges();
+        }
+
         public Wallet GetWallet(Guid userId)
         {
             return _parkitDb.Wallets.Find(userId);
+        }
+
+        public List<Wallet> GetWallets()
+        {
+            List<Wallet> wallets = _parkitDb.Wallets.ToList();
+            return wallets;
         }
 
         public Wallet UpdateWallet(Wallet wallet)

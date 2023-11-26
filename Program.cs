@@ -11,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IListingsProvider, ListingOperations>();
 builder.Services.AddScoped<IBookingProvider, BookingOperations>();
 builder.Services.AddScoped<IUserProvider, UserOperations>();
+builder.Services.AddScoped<IWalletProvider, WalletOperations>();
+builder.Services.AddScoped<IAddressProvider, AddressOperations>();
 
 builder.Services.AddHttpClient<GeocodeApi>();
 

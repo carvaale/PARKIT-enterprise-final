@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PARKIT_enterprise_final.Models
 {
-    [Owned]
+    // [Owned]
     public class Address
     {
         [Key]
