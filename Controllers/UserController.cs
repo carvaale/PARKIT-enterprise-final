@@ -7,10 +7,12 @@ namespace PARKIT_enterprise_final.Controllers
     public class UserController : Controller
     {
         private readonly IUserProvider _userProvider;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public UserController(IUserProvider userProvider)
+        public UserController(IUserProvider userProvider, IHttpContextAccessor httpContextAccessor)
         {
             _userProvider = userProvider;
+            _contextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -18,8 +20,34 @@ namespace PARKIT_enterprise_final.Controllers
         }
 
         [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(User user)
+        {
+            User userInDatabase = _userProvider.GetUserByUsername(user.Username);
+            if(userInDatabase != null)
+            {
+                if (userInDatabase.Password == user.Password)
+                {
+                    // login successfully
+                    // add login user to session
+                    var session = _contextAccessor.HttpContext.Session;
+                    session.SetString("LoginUser", userInDatabase.Id.ToString());
+                    return View(user);
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult CreateUser()
         {
+            var session = _contextAccessor.HttpContext.Session;
+            TempData["test"] = session.GetString("LoginUser");
             return View();
         }
 

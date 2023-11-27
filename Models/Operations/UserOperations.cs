@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PARKIT_enterprise_final.Models.DBContext;
 using PARKIT_enterprise_final.Models.Interfaces;
-using System.Net;
-using System.Reflection;
 
 namespace PARKIT_enterprise_final.Models.Operations
 {
@@ -30,6 +28,12 @@ namespace PARKIT_enterprise_final.Models.Operations
         public User GetUser(Guid userId)
         {
             return _parkitDb.Users.Find(userId);
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            User user = _parkitDb.Users.FirstOrDefault(x => x.Username == username);
+            return user;
         }
 
         public List<User> GetUsers()
