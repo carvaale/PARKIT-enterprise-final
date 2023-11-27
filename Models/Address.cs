@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PARKIT_enterprise_final.Models
 {
-    [Owned]
+    // [Owned]
     public class Address
     {
         [Key]
@@ -12,7 +12,7 @@ namespace PARKIT_enterprise_final.Models
         public string City { get; set; }
         public string ZipCode { get; set; }
 
-        public string Longitude { get; set; }
-        public string Latitude { get; set; }
+        public string? Longitude { get; set; }
+        public string? Latitude { get; set; }
     }
 }

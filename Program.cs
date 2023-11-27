@@ -10,12 +10,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IListingsProvider, ListingOperations>();
 builder.Services.AddScoped<IBookingProvider, BookingOperations>();
+builder.Services.AddScoped<IUserProvider, UserOperations>();
+builder.Services.AddScoped<IWalletProvider, WalletOperations>();
+builder.Services.AddScoped<IAddressProvider, AddressOperations>();
 
 builder.Services.AddHttpClient<GeocodeApi>();
 
 
 builder.Services.AddDbContext<PARKITDBContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("PARKITDB")));
+
+// using session service
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(15);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -33,6 +45,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

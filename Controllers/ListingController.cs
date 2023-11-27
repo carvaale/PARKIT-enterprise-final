@@ -77,8 +77,8 @@ namespace PARKIT_enterprise_final.Controllers
                 Wallet w1 = new Wallet 
                 { 
                     WalletId = Guid.NewGuid(), 
-                    cardHolderName = "test", 
-                    cardNumber = "test"
+                    CardHolderName = "test", 
+                    CardNumber = "test"
                 };
 
                 Address a1 = new Address
