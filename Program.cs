@@ -21,6 +21,7 @@ builder.Services.AddDbContext<PARKITDBContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("PARKITDB")));
 
 // using session service
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(15);

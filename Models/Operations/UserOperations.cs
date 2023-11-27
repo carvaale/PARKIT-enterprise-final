@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PARKIT_enterprise_final.Models.DBContext;
 using PARKIT_enterprise_final.Models.Interfaces;
-using System.Net;
-using System.Reflection;
 
 namespace PARKIT_enterprise_final.Models.Operations
 {

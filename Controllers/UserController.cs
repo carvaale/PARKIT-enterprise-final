@@ -34,6 +34,9 @@ namespace PARKIT_enterprise_final.Controllers
                 if (userInDatabase.Password == user.Password)
                 {
                     // login successfully
+                    // add login user to session
+                    var session = _contextAccessor.HttpContext.Session;
+                    session.SetString("LoginUser", userInDatabase.Id.ToString());
                     return View(user);
                 }
             }
@@ -43,6 +46,8 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult CreateUser()
         {
+            var session = _contextAccessor.HttpContext.Session;
+            TempData["test"] = session.GetString("LoginUser");
             return View();
         }
 
