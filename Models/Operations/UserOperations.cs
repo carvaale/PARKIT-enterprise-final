@@ -32,6 +32,12 @@ namespace PARKIT_enterprise_final.Models.Operations
             return _parkitDb.Users.Find(userId);
         }
 
+        public User GetUserByUsername(string username)
+        {
+            User user = _parkitDb.Users.FirstOrDefault(x => x.Username == username);
+            return user;
+        }
+
         public List<User> GetUsers()
         {
             List<User> Users = _parkitDb.Users.ToList();

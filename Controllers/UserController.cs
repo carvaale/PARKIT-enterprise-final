@@ -7,13 +7,36 @@ namespace PARKIT_enterprise_final.Controllers
     public class UserController : Controller
     {
         private readonly IUserProvider _userProvider;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public UserController(IUserProvider userProvider)
+        public UserController(IUserProvider userProvider, IHttpContextAccessor httpContextAccessor)
         {
             _userProvider = userProvider;
+            _contextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(User user)
+        {
+            User userInDatabase = _userProvider.GetUserByUsername(user.Username);
+            if(userInDatabase != null)
+            {
+                if (userInDatabase.Password == user.Password)
+                {
+                    // login successfully
+                    return View(user);
+                }
+            }
             return View();
         }
 
