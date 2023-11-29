@@ -2,17 +2,19 @@
 using PARKIT_enterprise_final.Models.Interfaces;
 using PARKIT_enterprise_final.Models;
 using PARKIT_enterprise_final.ViewModels;
+using System.Reflection;
 
 namespace PARKIT_enterprise_final.Controllers
 {
     public class BookingController : Controller
     {
         private readonly IListingsProvider _listingProvider;
-        private readonly IUserProvider _userProvider;
+        private readonly IBookingProvider _bookingProvider;
 
-        public BookingController(IListingsProvider listingsProvider)
+        public BookingController(IListingsProvider listingsProvider, IBookingProvider bookingProvider)
         {
             _listingProvider = listingsProvider;
+            _bookingProvider = bookingProvider;
         }
 
 
@@ -26,10 +28,40 @@ namespace PARKIT_enterprise_final.Controllers
             var viewModel = new ListingDetailsViewModel
             {
                 Listing = listing,
+                Booking = new Booking()
             };
 
             return View(viewModel);
 
         }
+
+        [HttpPost]
+        public IActionResult BookListing([Bind(Prefix = "Booking")] Booking booking)
+        {
+            if (ModelState.IsValid)
+            {
+/*                Booking booking = model.Booking;*/
+
+                // Calculate and set the total cost of the booking
+                booking.Id = Guid.NewGuid();
+                booking.TotalCost = _bookingProvider.CalculateTotalCost(booking);
+
+                _bookingProvider.AddBooking(booking);
+
+                return RedirectToAction("Account", "Home");
+            }
+
+            else
+            {
+/*                Booking booking = model.Booking;*/
+
+                Console.WriteLine($"Booking ID: {booking.Id}");
+                Console.WriteLine($"License Plate: {booking.LicensePlate}");
+                Console.WriteLine($"Start Time: {booking.StartTime}");
+                Console.WriteLine($"End Time: {booking.EndTime}");
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
-    }
+}
