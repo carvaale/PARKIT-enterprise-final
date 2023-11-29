@@ -36,22 +36,14 @@ namespace PARKIT_enterprise_final.Controllers
         }
 
         [HttpPost]
-        public IActionResult BookListing(ListingDetailsViewModel model)
+        public IActionResult BookListing([Bind(Prefix = "Booking")] Booking booking)
         {
-            // Calculate and set the total cost of the booking
-            model.Booking.TotalCost = _bookingProvider.CalculateTotalCost(model.Booking);
-
-            _bookingProvider.AddBooking(model.Booking);
-
-            return RedirectToAction("Account", "Home");
-
-
-
-/*            if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                Booking booking = model.Booking;
+/*                Booking booking = model.Booking;*/
 
                 // Calculate and set the total cost of the booking
+                booking.Id = Guid.NewGuid();
                 booking.TotalCost = _bookingProvider.CalculateTotalCost(booking);
 
                 _bookingProvider.AddBooking(booking);
@@ -61,7 +53,7 @@ namespace PARKIT_enterprise_final.Controllers
 
             else
             {
-                Booking booking = model.Booking;
+/*                Booking booking = model.Booking;*/
 
                 Console.WriteLine($"Booking ID: {booking.Id}");
                 Console.WriteLine($"License Plate: {booking.LicensePlate}");
@@ -69,7 +61,7 @@ namespace PARKIT_enterprise_final.Controllers
                 Console.WriteLine($"End Time: {booking.EndTime}");
 
                 return RedirectToAction("Index", "Home");
-            }*/
+            }
         }
     }
 }
