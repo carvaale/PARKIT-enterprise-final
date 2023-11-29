@@ -63,13 +63,12 @@
             <form asp-action="BookListing" method="post">
                 <!-- Hidden field for Listing ID -->
                 <div class="mb-3" hidden>
+                    <label asp-for="Listing"></label>
+                    <input asp-for="Listing" type="text" value="@Model.Listing.Id" />
+                </div>
+                <div class="mb-3" hidden>
                     <label asp-for="Booking.ListingId"></label>
                     <input asp-for="Booking.ListingId" type="text" value="@Model.Listing.Id" />
-                </div>
-                <!-- Hidden field for Total Cost -->
-                <div class="mb-3" hidden>
-                    <label asp-for="Booking.TotalCost"></label>
-                    <input asp-for="Booking.TotalCost" type="number" value="3254" />
                 </div>
 
                 <div class="mb-3">
