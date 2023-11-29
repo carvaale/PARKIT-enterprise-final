@@ -7,26 +7,33 @@ namespace PARKIT_enterprise_final.Models.Operations
     public class BookingOperations : IBookingProvider
     {
         private readonly PARKITDBContext _dbContext;
+        private readonly IListingsProvider _listingProvider;
 
-        public BookingOperations(PARKITDBContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-        public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
-        {
-            return await _dbContext.Bookings.Include(b => b.Listing).ToListAsync();
-        }
-
-        public async Task<Booking> GetBookingByIdAsync(Guid bookingId)
-        {
-            return await _dbContext.Bookings.Include(b => b.Listing).FirstOrDefaultAsync(b => b.Id == bookingId);
-        }
-
-        public async Task CreateBookingAsync(Booking booking)
+        public void AddBooking(Booking booking)
         {
             _dbContext.Bookings.Add(booking);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
+        }
+
+        public void UpdateBooking(Booking booking)
+        {
+            _dbContext.Bookings.Update(booking);
+            _dbContext.SaveChanges();
+        }
+
+        public double CalculateTotalCost(Booking booking)
+        {
+            // Retrieve the related listing using fk
+            Listing listing = _listingProvider.GetById(booking.ListingId);
+
+            // Calculate the total hours as a double
+            double totalHours = (booking.EndTime - booking.StartTime).TotalHours;
+
+
+            // Calculate the total cost
+            double totalCost = totalHours * listing.Price;
+
+            return totalCost;
         }
     }
 }

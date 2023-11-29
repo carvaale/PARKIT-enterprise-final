@@ -16,7 +16,7 @@ namespace PARKIT_enterprise_final.Controllers
             _listingProvider = listingsProvider;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
@@ -69,48 +69,8 @@ namespace PARKIT_enterprise_final.Controllers
         public IActionResult Map()
         {
 
-            List<Listing> listings = new List<Listing>() 
-            { 
-                new Listing { 
-                    Address = new Address { 
-                        StreetAddress = "1234 Main St", 
-                        City = "Seattle", 
-                        ZipCode = "98101", 
-                        Latitude = "43.65804053299989", 
-                        Longitude = "-79.4349384105354"
-                    }, 
-                    IsAvailable = true, 
-                    StartTime = TimeSpan.Parse("10:00"), 
-                    EndTime = TimeSpan.Parse("12:00"), 
-                    Price = 10.00 
-                },
-                new Listing {
-                    Address = new Address {
-                        StreetAddress = "1234 Main St",
-                        City = "Seattle",
-                        ZipCode = "98101",
-                        Latitude = "43.64804053299989",
-                        Longitude = "-79.4349384105354 "
-                    },
-                    IsAvailable = true,
-                    StartTime = TimeSpan.Parse("10:00"),
-                    EndTime = TimeSpan.Parse("12:00"),
-                    Price = 10.00
-                },
-                new Listing {
-                    Address = new Address {
-                        StreetAddress = "1234 Main St",
-                        City = "Seattle",
-                        ZipCode = "98101",
-                        Latitude = "43.65804053299989",
-                        Longitude = "-79.4249384105354"
-                    },
-                    IsAvailable = true,
-                    StartTime = TimeSpan.Parse("10:00"),
-                    EndTime = TimeSpan.Parse("12:00"),
-                    Price = 10.00
-                },
-            };
+            List<Listing> listings = _listingProvider.GetListings();
+            ViewData["GMAP_API_KEY"] = Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
  
             return View(listings);
         }
