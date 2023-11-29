@@ -3,6 +3,8 @@ using PARKIT_enterprise_final.Models.DBContext;
 using PARKIT_enterprise_final.Models.Interfaces;
 using PARKIT_enterprise_final.Models.Operations;
 using PARKIT_enterprise_final.Utils;
+using Microsoft.AspNetCore.Identity;
+using PARKIT_enterprise_final.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,10 @@ builder.Services.AddHttpClient<GeocodeApi>();
 
 builder.Services.AddDbContext<PARKITDBContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("PARKITDB")));
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("PARKITDB")));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationContext>();
 
 // using session service
 builder.Services.AddHttpContextAccessor();
@@ -41,6 +47,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.MapRazorPages();
 
 app.UseRouting();
 

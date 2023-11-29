@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PARKIT_enterprise_final.Areas.Identity.Data;
 using PARKIT_enterprise_final.Models;
 
 namespace PARKIT_enterprise_final.Models.DBContext
 {
-    public class PARKITDBContext : DbContext
+    public class PARKITDBContext : ApplicationContext
     {
         public PARKITDBContext(DbContextOptions<PARKITDBContext> options) : base(options)
         {
