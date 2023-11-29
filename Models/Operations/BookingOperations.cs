@@ -9,6 +9,12 @@ namespace PARKIT_enterprise_final.Models.Operations
         private readonly PARKITDBContext _dbContext;
         private readonly IListingsProvider _listingProvider;
 
+        public BookingOperations(PARKITDBContext dbContext, IListingsProvider listingProvider)
+        {
+            _dbContext = dbContext;
+            _listingProvider = listingProvider;
+        }
+
         public void AddBooking(Booking booking)
         {
             _dbContext.Bookings.Add(booking);
@@ -31,7 +37,7 @@ namespace PARKIT_enterprise_final.Models.Operations
 
 
             // Calculate the total cost
-            double totalCost = totalHours * listing.Price;
+            double totalCost = totalHours * 20;
 
             return totalCost;
         }
