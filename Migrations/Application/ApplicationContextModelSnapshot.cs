@@ -197,6 +197,9 @@ namespace PARKIT_enterprise_final.Migrations.Application
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
@@ -210,7 +213,154 @@ namespace PARKIT_enterprise_final.Migrations.Application
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Address", b =>
+                {
+                    b.Property<Guid>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Latitude")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Longitude")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AddressId");
+
+                    b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("ImageData")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<Guid>("ListingId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ListingId");
+
+                    b.ToTable("Image");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Listing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsBooked")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Listing");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("AddressId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("WalletId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Wallet", b =>
+                {
+                    b.Property<Guid>("WalletId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CardHolderName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("WalletId");
+
+                    b.ToTable("Wallet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -262,6 +412,70 @@ namespace PARKIT_enterprise_final.Migrations.Application
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Areas.Identity.Data.ApplicationUser", b =>
+                {
+                    b.HasOne("PARKIT_enterprise_final.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Image", b =>
+                {
+                    b.HasOne("PARKIT_enterprise_final.Models.Listing", "Listing")
+                        .WithMany("Images")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Listing");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Listing", b =>
+                {
+                    b.HasOne("PARKIT_enterprise_final.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PARKIT_enterprise_final.Models.User", "User")
+                        .WithMany("Listings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.User", b =>
+                {
+                    b.HasOne("PARKIT_enterprise_final.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("PARKIT_enterprise_final.Models.Wallet", "Wallet")
+                        .WithMany()
+                        .HasForeignKey("WalletId");
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Wallet");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.Listing", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("PARKIT_enterprise_final.Models.User", b =>
+                {
+                    b.Navigation("Listings");
                 });
 #pragma warning restore 612, 618
         }
