@@ -2,7 +2,7 @@
 {
     public interface IListingsProvider
     {
-        Listing AddListing(IFormCollection listing, User user);
+        Listing AddListing(IFormCollection listing, string userId);
 
         Listing UpdateListing(IFormCollection listing);
 
@@ -12,6 +12,7 @@
 
         Listing GetById(Guid id);
 
+        List<Listing> GetUserListings(string userId);
         List<Listing> GetListings();
 
         string GetSingleImageByListingId(Guid id);

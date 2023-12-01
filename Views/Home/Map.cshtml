@@ -1,20 +1,25 @@
 ﻿@model IEnumerable<PARKIT_enterprise_final.Models.Listing>
 @{
+    var images = Model.Select(l => l.Images.First());
+}
+@{
     ViewData["Title"] = "Map";
 }
 
 <div class="side-bar">
     @for (int i = 0; i < Model.Count(); i++)
     {
-        <div class="listing">
-@*             <img src="@ViewBag.images[i]" />
- *@            <div class="">
-                <span>@Model.ElementAt(i).Address.StreetAddress</span>
-                <span>@Model.ElementAt(i).Address.City</span>
-                <span>@Model.ElementAt(i).Address.ZipCode</span>
-                <span>@Model.ElementAt(i).Price</span>
+        <a class="listing" href="/Booking/BookListing/@Model.ElementAt(i).Id">
+            <div class="listing-img">
+				<img src="data:image/png;base64,@Convert.ToBase64String(images.ElementAt(i).ImageData)" alt="Listing Image" />
             </div>
-        </div>
+            <div class="listing-info">
+                <span>Street: @Model.ElementAt(i).Address.StreetAddress</span>
+                <span>City: @Model.ElementAt(i).Address.City</span>
+                <span>Zip: @Model.ElementAt(i).Address.ZipCode</span>
+                <span>Price: $@Model.ElementAt(i).Price</span>
+            </div>
+        </a>
     }
 </div>
 

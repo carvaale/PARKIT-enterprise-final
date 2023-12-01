@@ -74,11 +74,11 @@ namespace PARKIT_enterprise_final.Controllers
         }*/
 
         public IActionResult Map()
-        {
-
-            List<Listing> listings = _listingProvider.GetListings();
+        {            
+            List<Listing> listings = _listingProvider.GetListings(); 
+            
             ViewData["GMAP_API_KEY"] = Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
- 
+
             return View(listings);
         }
 
