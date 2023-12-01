@@ -60,20 +60,42 @@
         </div>
         <div class="col-md-6">
             <h3>Book This Spot</h3>
-            <form method="post" action="@Url.Action("ReserveSpot", "Booking")">
+            <form asp-action="BookListing" method="post">
                 <!-- Hidden field for Listing ID -->
-                @Html.HiddenFor(m => m.Listing.Id)
+                <div class="mb-3" hidden>
+                    <label asp-for="Listing"></label>
+                    <input asp-for="Listing" type="text" value="@Model.Listing.Id" />
+                </div>
+                <div class="mb-3" hidden>
+                    <label asp-for="Booking.ListingId"></label>
+                    <input asp-for="Booking.ListingId" type="text" value="@Model.Listing.Id" />
+                </div>
 
                 <div class="mb-3">
-                    <label for="carInput" class="form-label">Car License Plate</label>
-                    <input type="text" id="carInput" class="form-control" name="carLicensePlate" required placeholder="Enter Car License Plate" />
+                    <label asp-for="Booking.LicensePlate" class="form-label">Car License Plate</label>
+                    <input asp-for="Booking.LicensePlate" type="text" class="form-control text-uppercase" required placeholder="Enter Car License Plate" maxlength="7" />
                 </div>
 
                 <!-- Input for number of hours -->
-                <div class="mb-3">
-                    <label for="hoursSelection" class="form-label">Hours</label>
-                    <input type="number" id="hoursSelection" class="form-control" name="hours" min="1" required />
+                <div class="row">
+                    <!-- Input for Start Time -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Booking.StartTime" class="form-label">Start Time</label>
+                        <input asp-for="Booking.StartTime" type="time" class="form-control"
+                               required min="@Model.Listing.StartTime.ToString(@"hh\:mm")"
+                               max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
+                    </div>
+
+                    <!-- Input for End Time -->
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Booking.EndTime" class="form-label">End Time</label>
+                        <input asp-for="Booking.EndTime" type="time" class="form-control"
+                               required min="@Model.Listing.StartTime.ToString(@"hh\:mm")"
+                               max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
+                    </div>
                 </div>
+
+                <p>Availability: <b>@Model.Listing.StartTime</b> - <b>@Model.Listing.EndTime</b></p>
 
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary">Reserve</button>
