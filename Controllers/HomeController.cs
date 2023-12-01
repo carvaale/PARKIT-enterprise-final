@@ -18,7 +18,7 @@ namespace PARKIT_enterprise_final.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            return RedirectToAction("CreateUser", "User");
         }
 /*        [HttpGet]
         public IActionResult CreateListing()
