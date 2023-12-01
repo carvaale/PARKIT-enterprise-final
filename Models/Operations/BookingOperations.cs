@@ -21,10 +21,9 @@ namespace PARKIT_enterprise_final.Models.Operations
             _dbContext.SaveChanges();
         }
 
-        public void UpdateBooking(Booking booking)
+        public Booking GetBooking(Guid Id)
         {
-            _dbContext.Bookings.Update(booking);
-            _dbContext.SaveChanges();
+               return _dbContext.Bookings.Find(Id);
         }
 
         public double CalculateTotalCost(Booking booking)
