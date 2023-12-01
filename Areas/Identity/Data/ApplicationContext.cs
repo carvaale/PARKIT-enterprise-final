@@ -6,8 +6,8 @@ using PARKIT_enterprise_final.Models;
 
 namespace PARKIT_enterprise_final.Areas.Identity.Data;
 
-//public class ApplicationContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
-public class ApplicationContext : IdentityDbContext<ApplicationUser>
+public class ApplicationContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+//public class ApplicationContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
@@ -28,6 +28,6 @@ public class ApplicationContext : IdentityDbContext<ApplicationUser>
         builder.Entity<ApplicationUser>()
             .HasOne(u => u.User)
             .WithOne()
-            .HasForeignKey<User>(u => u.ApplicationUserId);
+            .HasForeignKey<ApplicationUser>(u => u.Id);
     }
 }

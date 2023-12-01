@@ -8,7 +8,7 @@ using PARKIT_enterprise_final.Models;
 namespace PARKIT_enterprise_final.Areas.Identity.Data;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<Guid>
 {
     public User? User { get; set; }
 }

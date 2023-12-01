@@ -90,7 +90,7 @@ namespace PARKIT_enterprise_final.Models.Operations
         public Listing GetById(Guid id)
         {
             Listing listing = _context.Listings.Find(id);
-            listing.User = _context.Users.Find(listing.UserId);
+            listing.User = _context.UserInfos.Find(listing.UserId);
             return listing;
             
         }

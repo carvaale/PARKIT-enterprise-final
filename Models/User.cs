@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PARKIT_enterprise_final.Models
 {
     public class User
     {
         [Key]
-        public int Id { get; set; }
-        public int ApplicationUserId { get; set; }
+        public Guid Id { get; set; }
         public string? Username { get; set; }
         public string? Password { get; set; }
         public string? FirstName { get; set; }

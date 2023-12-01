@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PARKIT_enterprise_final.Areas.Identity.Data;
 
@@ -10,9 +11,11 @@ using PARKIT_enterprise_final.Areas.Identity.Data;
 namespace PARKIT_enterprise_final.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231201013938_testAddUser2")]
+    partial class testAddUser2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -303,6 +306,9 @@ namespace PARKIT_enterprise_final.Migrations.Application
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("AddressId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ApplicationUserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")

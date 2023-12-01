@@ -5,6 +5,7 @@ using PARKIT_enterprise_final.Models.Operations;
 using PARKIT_enterprise_final.Utils;
 using Microsoft.AspNetCore.Identity;
 using PARKIT_enterprise_final.Areas.Identity.Data;
+using PARKIT_enterprise_final.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
