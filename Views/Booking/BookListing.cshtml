@@ -10,13 +10,24 @@
 <style>
     /* styles to limit size of carousel images */
     #listingImagesCarousel .carousel-item img {
-        max-height: 400px; 
+        max-height: 250px; 
         width: auto; 
         margin: 0 auto; 
     }
+
+    .listing-container {
+    display: flex;
+    flex-wrap: wrap; /* Ensures responsiveness */
+    }
+
+.info-column, .form-column {
+    flex: 1; /* Each column takes equal width */
+    padding: 10px; /* Add some spacing */
+    }
+}
 </style>
 
-<div class="container mt-3">
+<div class="mt-3">
     <!-- Carousel for images -->
     <div id="listingImagesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -36,71 +47,74 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
-    <!-- Address and Spot Owner Details -->
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <h3>Address</h3>
-            <p>@address.StreetAddress</p>
-            <p>@address.City, @address.ZipCode</p>
+    <div class="listing-container">
+        <div class="info-column">
+            <div class="col-md-6">
+                <h3>Address</h3>
+                <p>@address.StreetAddress</p>
+                <p>@address.City, @address.ZipCode</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Spot Owner Details</h3>
+                <p>Username: @owner.Username</p>
+                <p>Phone: @owner.Phone</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Payment Information</h3>
+                <p>Card Name: @* @wallet.cardHolderName *@</p>
+                <p>Card Number: @* @wallet.cardNumber *@</p>
+            </div>
         </div>
-        <div class="col-md-6">
-            <h3>Spot Owner Details</h3>
-            <p>Username: @owner.Username</p>
-            <p>Phone: @owner.Phone</p>
+        <div class="form-column">
+            <div class="col-md-6">
+                <h3>Book This Spot</h3>
+                <form asp-action="BookListing" method="post">
+                    <!-- Hidden field for Listing ID -->
+                    <div class="mb-3" hidden>
+                        <label asp-for="Listing"></label>
+                        <input asp-for="Listing" type="text" value="@Model.Listing.Id" />
+                    </div>
+                    <div class="mb-3" hidden>
+                        <label asp-for="Booking.ListingId"></label>
+                        <input asp-for="Booking.ListingId" type="text" value="@Model.Listing.Id" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Booking.LicensePlate" class="form-label">Car License Plate</label>
+                        <input asp-for="Booking.LicensePlate" type="text" class="form-control text-uppercase" required placeholder="Enter Car License Plate" maxlength="7" />
+                    </div>
+
+                    <!-- Input for number of hours -->
+                    <div class="row">
+                        <!-- Input for Start Time -->
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Booking.StartTime" class="form-label">Start Time</label>
+                            <input asp-for="Booking.StartTime" type="time" class="form-control"
+                                   required min="@Model.Listing.StartTime.ToString(@"hh\:mm")"
+                                   max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
+                        </div>
+
+                        <!-- Input for End Time -->
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Booking.EndTime" class="form-label">End Time</label>
+                            <input asp-for="Booking.EndTime" type="time" class="form-control"
+                                   required min="@Model.Listing.StartTime.ToString(@"hh\:mm")"
+                                   max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
+                        </div>
+                    </div>
+
+                    <p>Availability: <b>@Model.Listing.StartTime</b> - <b>@Model.Listing.EndTime</b></p>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary">Reserve</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- Booking Section -->
     <div class="row mt-3">
-        <div class="col-md-6">
-            <h3>Payment Information</h3>
-            <p>Card Name: @* @wallet.cardHolderName *@</p>
-            <p>Card Number: @* @wallet.cardNumber *@</p>
-        </div>
-        <div class="col-md-6">
-            <h3>Book This Spot</h3>
-            <form asp-action="BookListing" method="post">
-                <!-- Hidden field for Listing ID -->
-                <div class="mb-3" hidden>
-                    <label asp-for="Listing"></label>
-                    <input asp-for="Listing" type="text" value="@Model.Listing.Id" />
-                </div>
-                <div class="mb-3" hidden>
-                    <label asp-for="Booking.ListingId"></label>
-                    <input asp-for="Booking.ListingId" type="text" value="@Model.Listing.Id" />
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Booking.LicensePlate" class="form-label">Car License Plate</label>
-                    <input asp-for="Booking.LicensePlate" type="text" class="form-control text-uppercase" required placeholder="Enter Car License Plate" maxlength="7" />
-                </div>
-
-                <!-- Input for number of hours -->
-                <div class="row">
-                    <!-- Input for Start Time -->
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="Booking.StartTime" class="form-label">Start Time</label>
-                        <input asp-for="Booking.StartTime" type="time" class="form-control"
-                               required min="@Model.Listing.StartTime.ToString(@"hh\:mm")"
-                               max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
-                    </div>
-
-                    <!-- Input for End Time -->
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="Booking.EndTime" class="form-label">End Time</label>
-                        <input asp-for="Booking.EndTime" type="time" class="form-control"
-                               required min="@Model.Listing.StartTime.ToString(@"hh\:mm")"
-                               max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
-                    </div>
-                </div>
-
-                <p>Availability: <b>@Model.Listing.StartTime</b> - <b>@Model.Listing.EndTime</b></p>
-
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary">Reserve</button>
-            </form>
-        </div>
+        
     </div>
 </div>
 
