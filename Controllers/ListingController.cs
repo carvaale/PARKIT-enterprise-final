@@ -7,10 +7,12 @@ namespace PARKIT_enterprise_final.Controllers
     public class ListingController : Controller
     {
         private readonly IListingsProvider _listingProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ListingController(IListingsProvider listingsProvider)
+        public ListingController(IListingsProvider listingsProvider, IHttpContextAccessor httpContextAccessor)
         {
             _listingProvider = listingsProvider;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -20,7 +22,13 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult AllListings()
         {
-            return View(_listingProvider.GetListings());
+            if (_httpContextAccessor.HttpContext.Session.GetString("LoginUser") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var session = _httpContextAccessor.HttpContext.Session;
+            string userName = session.GetString("LoginUser");
+            return View(_listingProvider.GetUserListings(userName));
         }
 
         [HttpGet]
@@ -66,15 +74,18 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult CreateListing()
         {
+
             return View();
         }
         [HttpPost]
         public IActionResult CreateListing(IFormCollection listing)
         {
+            string userId = _httpContextAccessor.HttpContext.Session.GetString("LoginUser");
+
             if (ModelState.IsValid)
             {
                 // Wallet, Address and User are all temporary until we figure out how to get the user id from the session, this is just for testing purposes
-                Wallet w1 = new Wallet 
+                /*Wallet w1 = new Wallet 
                 { 
                     WalletId = Guid.NewGuid(), 
                     CardHolderName = "test", 
@@ -101,9 +112,9 @@ namespace PARKIT_enterprise_final.Controllers
                     Username = "Bob",
                     Wallet = w1,
                     Address = a1
-                };
+                };*/
 
-                _listingProvider.AddListing(listing, u1);
+                _listingProvider.AddListing(listing, userId);
                 return RedirectToAction("AllListings");
 
 

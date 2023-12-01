@@ -24,7 +24,7 @@ namespace PARKIT_enterprise_final.Models.Operations
             return image;
         }
 
-        public Listing AddListing(IFormCollection listing, User user)
+        public Listing AddListing(IFormCollection listing, string userId)
         {
             string IAString = listing["IsAvailable"];
             bool IABool;
@@ -43,7 +43,7 @@ namespace PARKIT_enterprise_final.Models.Operations
 
             Listing newListing = new Listing
             {
-                User = user,
+                User = _context.Users.Find(Guid.Parse(userId)),
                 Address = new Address
                 {
                     StreetAddress = listing["Address.StreetAddress"],
@@ -114,6 +114,16 @@ namespace PARKIT_enterprise_final.Models.Operations
         {
             List<Listing> listings = _context.Listings.ToList();
             return listings;
+        }
+        public List<Listing> GetUserListings(string userId)
+        {
+            List<Listing>? listings = _context.Listings.Where(l => l.UserId == Guid.Parse(userId)).ToList();
+            if (listings != null)
+            {
+                return listings;
+            }
+/*            List<Listing> listings = _context.Listings.ToList();*/
+            return null;
         }
 
         /// <summary>
