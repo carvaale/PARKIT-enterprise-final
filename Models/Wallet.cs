@@ -5,7 +5,8 @@ namespace PARKIT_enterprise_final.Models
     public class Wallet
     {
         [Key]
-        public Guid WalletId { get; set; }
+        public int WalletId { get; set; }
+        public int OwnerId { get; set; }
         public string CardNumber { get; set; }
         public string CardHolderName { get; set; }
 

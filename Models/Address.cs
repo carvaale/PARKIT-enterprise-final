@@ -7,7 +7,7 @@ namespace PARKIT_enterprise_final.Models
     public class Address
     {
         [Key]
-        public Guid AddressId { get; set; }
+        public int AddressId { get; set; }
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }

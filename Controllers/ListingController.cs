@@ -76,14 +76,14 @@ namespace PARKIT_enterprise_final.Controllers
                 // Wallet, Address and User are all temporary until we figure out how to get the user id from the session, this is just for testing purposes
                 Wallet w1 = new Wallet 
                 { 
-                    WalletId = Guid.NewGuid(), 
+                    //WalletId = Guid.NewGuid(), 
                     CardHolderName = "test", 
                     CardNumber = "test"
                 };
 
                 Address a1 = new Address
                 {
-                    AddressId = Guid.NewGuid(),
+                    //AddressId = Guid.NewGuid(),
                     City = "Test",
                     StreetAddress = "Test",
                     ZipCode = "Test",
@@ -92,7 +92,7 @@ namespace PARKIT_enterprise_final.Controllers
                 };
                 User u1 = new User
                 {
-                    Id = Guid.NewGuid(),
+                    //Id = Guid.NewGuid(),
                     FirstName = "Bob",
                     LastName = "DaBuilder",
                     Email = "Test",

@@ -98,6 +98,16 @@ namespace PARKIT_enterprise_final.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            // Other customize information for input
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Phone { get; set; }
+            public string StreetAddress { get; set; }
+            public string City { get; set; }
+            public string ZipCode { get; set; }
+            public string CardNumber { get; set; }
+            public string CardHolderName { get; set; }
         }
 
 
@@ -114,6 +124,25 @@ namespace PARKIT_enterprise_final.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                // Populate user's information
+                user.User = new Models.User
+                {
+                    FirstName = Input.FirstName, 
+                    LastName = Input.LastName,
+                    Phone = Input.Phone,
+                    Address = new Models.Address
+                    {
+                        StreetAddress = Input.StreetAddress,
+                        City = Input.City,
+                        ZipCode = Input.ZipCode,
+                    },
+                    Wallet = new Models.Wallet
+                    {
+                        CardHolderName = Input.CardHolderName,
+                        CardNumber = Input.CardNumber,
+                    }
+                };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
