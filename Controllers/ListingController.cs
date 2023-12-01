@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PARKIT_enterprise_final.Models;
 using PARKIT_enterprise_final.Models.Interfaces;
 
@@ -22,13 +23,14 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult AllListings()
         {
-            if (_httpContextAccessor.HttpContext.Session.GetString("LoginUser") == null)
+            if (_httpContextAccessor.HttpContext.Session.GetString("CurrentUser") == null)
             {
                 return RedirectToAction("Login", "User");
             }
             var session = _httpContextAccessor.HttpContext.Session;
-            string userName = session.GetString("LoginUser");
-            return View(_listingProvider.GetUserListings(userName));
+            string value = session.GetString("CurrentUser");
+            User user = JsonConvert.DeserializeObject<User>(value);
+            return View(_listingProvider.GetUserListings(user.Id.ToString()));
         }
 
         [HttpGet]
@@ -80,7 +82,10 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpPost]
         public IActionResult CreateListing(IFormCollection listing)
         {
-            string userId = _httpContextAccessor.HttpContext.Session.GetString("LoginUser");
+            var session = _httpContextAccessor.HttpContext.Session;
+            string value = session.GetString("CurrentUser");
+            User user = JsonConvert.DeserializeObject<User>(value);
+            string userId = user.Id.ToString();
 
             if (ModelState.IsValid)
             {
