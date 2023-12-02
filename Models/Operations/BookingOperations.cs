@@ -21,6 +21,14 @@ namespace PARKIT_enterprise_final.Models.Operations
             _dbContext.SaveChanges();
         }
 
+        public Booking CreateBooking(Booking booking, string userId) 
+        {
+            booking.Id = Guid.NewGuid();
+            booking.TotalCost = CalculateTotalCost(booking);
+            booking.UserID = Guid.Parse(userId);
+            return booking;
+        }
+
         public Booking GetBooking(Guid Id)
         {
                return _dbContext.Bookings.Find(Id);
