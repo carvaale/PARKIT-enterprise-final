@@ -4,6 +4,7 @@
 }
 
 <div class="side-bar">
+    <span id="side-bar-title">Listings: @Model.Count() found</span>
     @foreach (MapPoint mapPoint in Model) 	{
 		<a class="side-bar-item" href="/Booking/BookListing/@mapPoint.id">
 			<div class="side-bar-item-img">

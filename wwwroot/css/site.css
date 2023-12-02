@@ -40,6 +40,17 @@ main {
     z-index: 1;
 }
 
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .side-bar {
     position: absolute;
     background-color: #fff;
@@ -49,6 +60,23 @@ main {
     border-radius: 8px;
     z-index: 2;
     overflow-y: scroll;
+}
+
+.side-bar::-webkit-scrollbar {
+    display: none;
+}
+
+#side-bar-title {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #3A3B3C;
+    border-radius: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
 }
 
 .side-bar-item {
