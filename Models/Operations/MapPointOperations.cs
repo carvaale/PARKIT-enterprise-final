@@ -14,7 +14,6 @@ namespace PARKIT_enterprise_final.Models.Operations
         public List<MapPoint> GetMapPoints()
         {
             List<MapPoint> mapPoints = new List<MapPoint>();
-
             List<Listing> listings = _listingProvider.GetListings();
 
             foreach (Listing listing in listings)
@@ -24,7 +23,7 @@ namespace PARKIT_enterprise_final.Models.Operations
                     id = listing.Id,
                     latitude = Convert.ToDouble(listing.Address.Latitude),
                     longitude = Convert.ToDouble(listing.Address.Longitude),
-                    thumbnail = listing.Images.First(),
+                    thumbnail = Convert.ToBase64String(listing.Images.First().ImageData),
                     street = listing.Address.StreetAddress,
                     city = listing.Address.City,
                     zip = listing.Address.ZipCode,
