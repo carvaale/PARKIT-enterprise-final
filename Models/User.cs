@@ -13,6 +13,7 @@ namespace PARKIT_enterprise_final.Models
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public Address? Address { get; set; }
+        public Guid? WalletId { get; set; }
         public Wallet? Wallet { get; set; }
 
         
