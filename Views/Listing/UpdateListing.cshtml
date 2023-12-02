@@ -4,58 +4,107 @@
     ViewData["Title"] = "UpdateListing";
 }
 
-<h1>UpdateListing</h1>
+<style>
+    .center-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
 
-<h4>Listing</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="UpdateListing" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" type="time" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" type="time" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div>
+    .form-container {
+        max-width: 600px;
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
 
-                @foreach (var item in ViewBag.Images)
-                {
-                    <img src="data:image/PNG;base64, @item" alt="No Image Found" width="30" />
-                }
+    .form-header {
+        background-color: #007bff;
+        color: white;
+        border-radius: 15px 15px 0 0;
+        padding: 15px;
+        text-align: center;
+    }
 
-                <label asp-for="Files">Change Images</label>
-                <input asp-for="Files" type="file" multiple accept=".png" />
+    .form-body {
+        padding: 20px;
+    }
 
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-            
-        </form>
+    .btn-save {
+        background-color: #28a745;
+        color: white;
+        border: none;
+    }
+
+    .btn-back {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+    .img-preview {
+        margin: 10px;
+        max-width: 30px;
+    }
+</style>
+
+<div class="center-container">
+    <div class="card form-container">
+        <div class="card-header form-header">
+            <h1 class="card-title">Update Listing</h1>
+        </div>
+        <div class="card-body form-body">
+            <h4>Listing</h4>
+            <hr />
+            <form asp-action="UpdateListing" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsAvailable" /> @Html.DisplayNameFor(model => model.IsAvailable)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StartTime" class="control-label"></label>
+                    <input asp-for="StartTime" type="time" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndTime" class="control-label"></label>
+                    <input asp-for="EndTime" type="time" class="form-control" min="@Model.StartTime" />
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" required placeholder="Price per hour must be greater than $0" pattern="^(?!-).*$" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div>
+
+                    @foreach (var item in ViewBag.Images)
+                    {
+                        <img src="data:image/PNG;base64, @item" alt="No Image Found" class="img-preview" />
+                    }
+
+                    <label asp-for="Files">Change Images</label>
+                    <input asp-for="Files" type="file" multiple accept=".png" />
+
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-save" />
+                    <a asp-action="AllListings" class="btn btn-danger">Cancel</a>
+                </div>
+
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<script>
+    function updateEndTimeMin() {
+        var startTime = document.getElementById("StartTime").value;
+        document.getElementById("EndTime").min = startTime;
+    }
+</script>

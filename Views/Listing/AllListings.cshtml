@@ -4,61 +4,80 @@
     ViewData["Title"] = "AllListings";
 }
 
-<h1>AllListings</h1>
 
-<p>
-    <a asp-action="CreateListing">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Address.StreetAddress)
-            
-            <th>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsBooked)
-            </th>
-            <th>
-                    @Html.DisplayNameFor(model => model.IsAvailable)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (Listing item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.StreetAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsBooked)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAvailable)
-            </td>
-            <td>
-                <a asp-action="UpdateListing" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="ListingDetails" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="DeleteListing" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<style>
+    .center-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    .card-container {
+        max-width: 70vw; /* Adjust the maximum width as needed */
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #434f46; 
+        color: white;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .table th, .table td {
+        text-align: center;
+    }
+
+    .btn-create {
+        background-color: #28a745;
+        color: white;
+        border: none;
+    }
+</style>
+
+<div class="center-container">
+    <div class="card card-container">
+        <div class="card-header">
+            <h1 class="card-title">All Listings</h1>
+        </div>
+        <div class="card-body">
+            <p>
+                <a asp-action="CreateListing" class="btn btn-create">Create New</a>
+            </p>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Address.StreetAddress)</th>
+                        <th>@Html.DisplayNameFor(model => model.StartTime)</th>
+                        <th>@Html.DisplayNameFor(model => model.EndTime)</th>
+                        <th>@Html.DisplayNameFor(model => model.Price)</th>
+                        <th>@Html.DisplayNameFor(model => model.IsBooked)</th>
+                        <th>@Html.DisplayNameFor(model => model.IsAvailable)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Listing item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Address.StreetAddress)</td>
+                            <td>@Html.DisplayFor(modelItem => item.StartTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.EndTime)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                            <td>@Html.DisplayFor(modelItem => item.IsBooked)</td>
+                            <td>@Html.DisplayFor(modelItem => item.IsAvailable)</td>
+                            <td>
+                                <a asp-action="UpdateListing" asp-route-id="@item.Id" class="btn text-decoration-underline">Edit</a> |
+                                <a asp-action="ListingDetails" asp-route-id="@item.Id" class="btn text-decoration-underline">Details</a> | 
+                                <a asp-action="DeleteListing" asp-route-id="@item.Id" class="btn text-decoration-underline">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

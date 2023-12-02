@@ -55,8 +55,6 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult CreateUser()
         {
-            var session = _contextAccessor.HttpContext.Session;
-            TempData["test"] = session.GetString("LoginUser");
             return View();
         }
 
@@ -69,6 +67,9 @@ namespace PARKIT_enterprise_final.Controllers
                 u.WalletId = u.Wallet.WalletId;
                 _userProvider.UpdateUser(u);
 
+                var session = _contextAccessor.HttpContext.Session;
+                session.SetString("CurrentUserName", u.FirstName.ToString());
+                session.SetString("CurrentUser", JsonConvert.SerializeObject(u));
                 // need to change the destination
                 return RedirectToAction("Account", "Account");
             }
@@ -108,6 +109,16 @@ namespace PARKIT_enterprise_final.Controllers
             _userProvider.UpdateUser(user); ;
 
             return RedirectToAction("AllUsers");
+        }
+
+        [HttpGet]
+        public IActionResult LogoutUser()
+        {
+            var session = _contextAccessor.HttpContext.Session;
+            session.SetString("CurrentUserName", "");
+            session.SetString("CurrentUser", "");
+            _contextAccessor.HttpContext.Session.Clear();
+            return RedirectToAction("Account", "Home");
         }
 
 
