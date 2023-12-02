@@ -14,15 +14,16 @@ namespace PARKIT_enterprise_final.Controllers
         private readonly IBookingProvider _bookingProvider;
         private readonly IUserProvider _userProvider;
         private readonly IWalletProvider _walletProvider;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public HomeController(
             ILogger<HomeController> logger, 
-            IListingsProvider listingsProvider, 
-            IBookingProvider bookingProvider, 
-            IUserProvider userProvider, 
+            IListingsProvider listingsProvider,
+            IBookingProvider bookingProvider,
+            IUserProvider userProvider,
             IWalletProvider walletProvider,
-            IMapPointProvider mapPointProvider
-            )
+            IMapPointProvider mapPointProvider,
+            IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
             _listingProvider = listingsProvider;
@@ -30,10 +31,15 @@ namespace PARKIT_enterprise_final.Controllers
             _userProvider = userProvider;
             _walletProvider = walletProvider;
             _mapPointProvider = mapPointProvider;
+            _contextAccessor = contextAccessor;
         }
 
         public async Task<IActionResult> Index()
         {
+            if(_contextAccessor.HttpContext.Session.GetString("CurrentUser") != null)
+            {
+                return RedirectToAction("Account", "Home");
+            }
             return RedirectToAction("CreateUser", "User");
         }
 
