@@ -8,5 +8,6 @@
         User UpdateUser(User user);
         User GetUserByUsername(string username);
         void DeleteUser(User user);
+        User GetSessionUser();
     }
 }
