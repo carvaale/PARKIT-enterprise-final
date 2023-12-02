@@ -7,6 +7,8 @@ namespace PARKIT_enterprise_final.Models.Interfaces
 
         void AddBooking(Booking booking);
 
+        Booking CreateBooking(Booking booking, string userId);
+
         Booking GetBooking(Guid id);
 
         double CalculateTotalCost(Booking booking);
