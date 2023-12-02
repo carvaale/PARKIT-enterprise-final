@@ -13,7 +13,8 @@ namespace PARKIT_enterprise_final.Models
         public double TotalCost { get; set; }
         [ForeignKey("ListingId")]
         public Guid ListingId { get; set; }
-
+        [ForeignKey("UserID")]
+        public Guid UserID { get; set; }
     }
 
 }
