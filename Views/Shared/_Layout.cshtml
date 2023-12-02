@@ -32,6 +32,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Index">My Listings</a>
                         </li>
+                        @if (Context.Session.GetString("CurrentUser") != null)
+                        {
+                            <li class="nav-item">
+                                Hello! @Context.Session.GetString("CurrentUserName") <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
