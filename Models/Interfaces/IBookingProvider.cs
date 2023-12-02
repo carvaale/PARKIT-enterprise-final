@@ -9,8 +9,10 @@ namespace PARKIT_enterprise_final.Models.Interfaces
 
         Booking CreateBooking(Booking booking, string userId);
 
-        Booking GetBooking(Guid id);
+        List<Booking> GetAllBookings(Guid id);
 
         double CalculateTotalCost(Booking booking);
+
+        string getUserId();
     }
 }

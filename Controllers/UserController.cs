@@ -40,7 +40,7 @@ namespace PARKIT_enterprise_final.Controllers
                     var session = _contextAccessor.HttpContext.Session;
                     session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
                     session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
-                    return RedirectToAction("Account", "Home");
+                    return RedirectToAction("Account", "Account");
                 }
             }
             return View();
@@ -71,7 +71,7 @@ namespace PARKIT_enterprise_final.Controllers
                 session.SetString("CurrentUserName", u.FirstName.ToString());
                 session.SetString("CurrentUser", JsonConvert.SerializeObject(u));
                 // need to change the destination
-                return RedirectToAction("Account", "Home");
+                return RedirectToAction("Account", "Account");
             }
             return View();
         }
