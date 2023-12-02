@@ -7,5 +7,7 @@ namespace PARKIT_enterprise_final.ViewModels
         public Listing Listing { get; set; }
 
         public Booking Booking { get; set; }
+        public Wallet Wallet { get; set; }
+
     }
 }

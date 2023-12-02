@@ -55,20 +55,5 @@ namespace PARKIT_enterprise_final.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        public IActionResult Account(Guid Id)
-        {
-            var viewModel = new AccountsViewModel
-            {
-/*                User = _userProvider.GetUser(Id),
-                Wallet = _walletProvider.GetWallet*/
-            };
-
-
-
-            return View();
-        }
-
-
     }
 }
