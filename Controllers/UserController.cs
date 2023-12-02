@@ -66,9 +66,11 @@ namespace PARKIT_enterprise_final.Controllers
             if (ModelState.IsValid)
             {
                 User u = _userProvider.CreateUser(user);
+                u.WalletId = u.Wallet.WalletId;
+                _userProvider.UpdateUser(u);
 
                 // need to change the destination
-                return RedirectToAction("Map", "Home");
+                return RedirectToAction("Account", "Home");
             }
             return View();
         }
