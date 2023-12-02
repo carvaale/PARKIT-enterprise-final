@@ -9,14 +9,19 @@ namespace PARKIT_enterprise_final.Models
 
         [Key]
         public Guid Id { get; set; }
+        [Required]
         public Address Address { get; set; }
+        [Required]
         public bool IsAvailable { get; set; }
-
+        [Required]
         public bool IsBooked { get; set; } = false;
+        [Required]
         public TimeSpan StartTime { get; set; }
+        [Required]
         public TimeSpan EndTime { get; set; }
 
         //price per hour
+        [Required]
         public double Price { get; set; }
 
         public List<Image>? Images { get; set; }
@@ -25,8 +30,10 @@ namespace PARKIT_enterprise_final.Models
         [NotMapped]
         public IFormFileCollection? Files { get; set; }
 
+        [Required]
         public Guid UserId { get; set; }
         [ForeignKey("UserId")]
-        public User? User { get; set; } // is only nullable until we figure out how to get the user id from the session
+        [Required]
+        public User User { get; set; } 
     }
 }

@@ -1,0 +1,154 @@
+﻿@model PARKIT_enterprise_final.Models.Listing
+
+@{
+    ViewData["Title"] = "Create Item";
+}
+
+<style>
+    .left-container {
+        display: flex;
+        flex-direction: column; /* Change to column direction */
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f8f9fa; /* Adjust background color as needed */
+    }
+
+    .right-container {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        height: 100vh;
+        background-color: #e9ecef; /* Adjust background color as needed */
+    }
+
+    .form-container {
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        margin-top: 50px;
+        background-color: white;
+        border-radius: 8px;
+    }
+
+    .terms-of-service-card {
+        max-width: 35vw;
+        width: 100%;
+        margin-bottom: 20px; /* Add margin between the cards */
+        padding: 20px;
+        text-align: center;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-container input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left Container with Terms of Service Cards -->
+        <div class="col-md-6 left-container">
+            <div class="card terms-of-service-card">
+                <div class="card-body">
+                    <h2 class="card-title">Terms of Service</h2>
+                    <p class="card-text">You <strong class="font-weight-bold">MUST</strong> own all parking spots that are listed on your account</p>
+                </div>
+            </div>
+
+            <!-- Second Terms of Service Card (Underneath the First) -->
+            <div class="card terms-of-service-card">
+                <div class="card-body">
+                    <h2 class="card-title">Instructions</h2>
+                    <p class="card-text">Your full address, start and end times, and price must be provided for each listing. Up to three images can be added to each listing. It is recommended but not required to upload at least one image.</p>
+                    <p class="card-text">When you want a parking spot to be available to be seen by other users, select the is available check box (Can be done later on the edit listing page).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Container with Form at the End -->
+        <div class="col-md-6 right-container">
+            <div class="form-container">
+                <h1>Enter Listing Info</h1>
+                <hr />
+
+                <form asp-action="CreateListing" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="All"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="Address.StreetAddress">Street Address</label>
+                            <input asp-for="Address.StreetAddress" required placeholder="Enter a Street Address" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Address.City">City</label>
+                            <input asp-for="Address.City" required placeholder="Enter a City" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="Address.ZipCode">ZipCode</label>
+                            <input asp-for="Address.ZipCode" required placeholder="Enter a Zip Code without spaces" maxlength="6" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="StartTime">Start Time</label>
+                            <input asp-for="StartTime" type="time" required placeholder="Enter a start time" onchange="updateEndTimeMin()" />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="EndTime">End Time</label>
+                            <input asp-for="EndTime" type="time" required placeholder="Enter an end time" min="" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="Price">Price per hour</label>
+                            <input asp-for="Price" required placeholder="Enter a price above $0" pattern="^(?!-).*$" onerror="must be greater than 0" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="IsAvailable" class="form-check-inline">Is Available</label>
+                            <input asp-for="IsAvailable" type="checkbox" class="form-check-inline"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label asp-for="Files">Upload images</label>
+                            <input asp-for="Files" type="file" multiple accept=".png" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function updateEndTimeMin() {
+        var startTime = document.getElementById("StartTime").value;
+        document.getElementById("EndTime").min = startTime;
+    }
+</script>

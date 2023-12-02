@@ -112,7 +112,7 @@ namespace PARKIT_enterprise_final.Models.Operations
 
         public List<Listing> GetListings()
         {
-            List<Listing> listings = _context.Listings.ToList();
+            List<Listing> listings = _context.Listings.Where(l => l.IsAvailable == true).ToList(); // Only return listings that are available
             return listings;
         }
         public List<Listing> GetUserListings(string userId)
