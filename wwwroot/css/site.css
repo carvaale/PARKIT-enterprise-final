@@ -31,6 +31,26 @@ main {
     padding: 0;
 }
 
+.map {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: calc(100vh - 40px);
+    padding: 10px;
+    z-index: 1;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .side-bar {
     position: absolute;
     background-color: #fff;
@@ -42,16 +62,11 @@ main {
     overflow-y: scroll;
 }
 
-.map {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: calc(100vh - 40px);
-    padding: 10px;
-    z-index: 1;
+.side-bar::-webkit-scrollbar {
+    display: none;
 }
 
-.listing {
+#side-bar-title {
     margin: 5px;
     padding: 5px;
     display: flex;
@@ -64,13 +79,26 @@ main {
     color: #fff;
 }
 
-.listing-img img {
+.side-bar-item {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #3A3B3C;
+    border-radius: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+}
+
+.side-bar-item-img img {
     width: 100px;
     height: 100px;
     border-radius: 8px;
 }
 
-.listing-info {
+.side-bar-item-info {
     display: flex;
     flex-direction: column;
     margin-left: 10px;

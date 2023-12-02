@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IMapPointProvider, MapPointOperations>();
 builder.Services.AddScoped<IListingsProvider, ListingOperations>();
 builder.Services.AddScoped<IBookingProvider, BookingOperations>();
 builder.Services.AddScoped<IUserProvider, UserOperations>();
