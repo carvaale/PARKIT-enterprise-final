@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PARKIT_enterprise_final.Models;
 using PARKIT_enterprise_final.Models.Interfaces;
+using PARKIT_enterprise_final.ViewModels;
 using System.Diagnostics;
 
 namespace PARKIT_enterprise_final.Controllers
@@ -9,16 +10,22 @@ namespace PARKIT_enterprise_final.Controllers
     {
         private readonly IListingsProvider _listingProvider;
         private readonly ILogger<HomeController> _logger;
+        private readonly IBookingProvider _bookingProvider;
+        private readonly IUserProvider _userProvider;
+        private readonly IWalletProvider _walletProvider;
 
-        public HomeController(ILogger<HomeController> logger, IListingsProvider listingsProvider)
+        public HomeController(ILogger<HomeController> logger, IListingsProvider listingsProvider, IBookingProvider bookingProvider, IUserProvider userProvider, IWalletProvider walletProvider)
         {
             _logger = logger;
             _listingProvider = listingsProvider;
+            _bookingProvider = bookingProvider;
+            _userProvider = userProvider;
+            _walletProvider = walletProvider;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            return RedirectToAction("CreateUser", "User");
         }
 /*        [HttpGet]
         public IActionResult CreateListing()
@@ -67,21 +74,15 @@ namespace PARKIT_enterprise_final.Controllers
         }*/
 
         public IActionResult Map()
-        {
-
-            List<Listing> listings = _listingProvider.GetListings();
+        {            
+            List<Listing> listings = _listingProvider.GetListings(); 
             
             ViewData["GMAP_API_KEY"] = Environment.GetEnvironmentVariable("GOOGLE_API_KEY");
- 
+
             return View(listings);
         }
 
         public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Account()
         {
             return View();
         }
@@ -91,5 +92,20 @@ namespace PARKIT_enterprise_final.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Account(Guid Id)
+        {
+            var viewModel = new AccountsViewModel
+            {
+/*                User = _userProvider.GetUser(Id),
+                Wallet = _walletProvider.GetWallet*/
+            };
+
+
+
+            return View();
+        }
+
+
     }
 }

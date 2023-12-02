@@ -21,10 +21,17 @@ namespace PARKIT_enterprise_final.Models.Operations
             _dbContext.SaveChanges();
         }
 
-        public void UpdateBooking(Booking booking)
+        public Booking CreateBooking(Booking booking, string userId) 
         {
-            _dbContext.Bookings.Update(booking);
-            _dbContext.SaveChanges();
+            booking.Id = Guid.NewGuid();
+            booking.TotalCost = CalculateTotalCost(booking);
+            booking.UserID = Guid.Parse(userId);
+            return booking;
+        }
+
+        public Booking GetBooking(Guid Id)
+        {
+               return _dbContext.Bookings.Find(Id);
         }
 
         public double CalculateTotalCost(Booking booking)

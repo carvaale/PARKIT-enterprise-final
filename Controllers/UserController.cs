@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PARKIT_enterprise_final.Models;
 using PARKIT_enterprise_final.Models.Interfaces;
 
@@ -36,11 +38,18 @@ namespace PARKIT_enterprise_final.Controllers
                     // login successfully
                     // add login user to session
                     var session = _contextAccessor.HttpContext.Session;
-                    session.SetString("LoginUser", userInDatabase.Id.ToString());
-                    return View(user);
+                    session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
+                    session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
+                    return RedirectToAction("Account", "Home");
                 }
             }
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult AllUsers()
+        {
+            return View(_userProvider.GetUsers());
         }
 
         [HttpGet]
@@ -51,21 +60,17 @@ namespace PARKIT_enterprise_final.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult AllUsers()
-        {
-            return View(_userProvider.GetUsers());
-        }
-
         [HttpPost]
         public IActionResult CreateUser(User user)
         {
             if (ModelState.IsValid)
             {
                 User u = _userProvider.CreateUser(user);
+                u.WalletId = u.Wallet.WalletId;
+                _userProvider.UpdateUser(u);
 
                 // need to change the destination
-                return RedirectToAction("AllUsers");
+                return RedirectToAction("Account", "Home");
             }
             return View();
         }

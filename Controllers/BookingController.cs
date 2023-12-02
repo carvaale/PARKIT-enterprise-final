@@ -10,11 +10,13 @@ namespace PARKIT_enterprise_final.Controllers
     {
         private readonly IListingsProvider _listingProvider;
         private readonly IBookingProvider _bookingProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BookingController(IListingsProvider listingsProvider, IBookingProvider bookingProvider)
+        public BookingController(IListingsProvider listingsProvider, IBookingProvider bookingProvider, IHttpContextAccessor httpContextAccessor)
         {
             _listingProvider = listingsProvider;
             _bookingProvider = bookingProvider;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -40,11 +42,10 @@ namespace PARKIT_enterprise_final.Controllers
         {
             if (ModelState.IsValid)
             {
-/*                Booking booking = model.Booking;*/
+                string userId = _httpContextAccessor.HttpContext.Session.GetString("LoginUser");
 
-                // Calculate and set the total cost of the booking
-                booking.Id = Guid.NewGuid();
-                booking.TotalCost = _bookingProvider.CalculateTotalCost(booking);
+                userId = "B8B72E7F-8B1D-4D20-AC8A-E44864022500";
+                booking = _bookingProvider.CreateBooking(booking, userId);
 
                 _bookingProvider.AddBooking(booking);
 
@@ -53,13 +54,6 @@ namespace PARKIT_enterprise_final.Controllers
 
             else
             {
-/*                Booking booking = model.Booking;*/
-
-                Console.WriteLine($"Booking ID: {booking.Id}");
-                Console.WriteLine($"License Plate: {booking.LicensePlate}");
-                Console.WriteLine($"Start Time: {booking.StartTime}");
-                Console.WriteLine($"End Time: {booking.EndTime}");
-
                 return RedirectToAction("Index", "Home");
             }
         }
