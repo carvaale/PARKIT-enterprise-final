@@ -14,7 +14,7 @@ namespace PARKIT_enterprise_final.Models.Operations
     public class ListingOperations : IListingsProvider
     {
         private readonly PARKITDBContext _context; // Database context for interation with the database 
-        private readonly GeocodeApi _geocodeApi;  // Added by Alex Carvahlo, used to get the longitude and latitude from the address
+        private readonly GeocodeApi _geocodeApi;  // Added by Alex Carvalho, used to get the longitude and latitude from the address
 
         /// <summary>
         /// Inject the database context and service for converting address into longitude and latitude into the class
@@ -60,7 +60,7 @@ namespace PARKIT_enterprise_final.Models.Operations
             }
 
 
-            // Get the longitude and latitude from the address (Added by Alex Carvahlo)
+            // Get the longitude and latitude from the address (Added by Alex Carvalho)
             LatLng latLng = _geocodeApi.GetGeocode(listing["Address.StreetAddress"]).Result;
 
             // Create a new listing object from the form data

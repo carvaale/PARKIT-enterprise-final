@@ -1,4 +1,8 @@
-﻿@using PARKIT_enterprise_final.ViewModels
+﻿@* Implemented By : Syed Taha Faisal
+Populates Account View *@
+
+
+@using PARKIT_enterprise_final.ViewModels
 
 @model AccountsViewModel
 
@@ -10,48 +14,44 @@
     .custom-scrollbar::-webkit-scrollbar {
         display: none;
     }
-
     .custom-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; 
+        scrollbar-width: none;
     }
-
     /* Sticky header style */
     .sticky-header {
         position: sticky;
         top: 0;
-        z-index: 1020; /* Ensures the header is above other content */
-        background-color: white; /* Or any color that matches your design */
+        z-index: 1020; 
+        background-color: white;
     }
     .bg-custom{
         background-color: #375446;
         color: white;
     }
-
     .bg-custom2 {
         background-color: #5d7669;
         color: white;
     }
-
     input:focus {
         border: 2px solid #375446 !important;
         outline: none;
         box-shadow: 0 0 0 0.2rem rgba(55, 84, 70, 0.25) !important;
     }
 </style>
-    <div class="container">
-        <!-- Profile and Cards Section -->
+<div class="container">
+    <!-- Profile and Cards Section -->
     <div class="row my-4">
         <div class="col-md-4 text-center ">
             <img class="rounded-circle shadow-4-strong" alt="avatar2" src="~/images/pfpPic.svg" width="128" height="128" />
             <h3 class="my-2 mt-3">@Model.User.Username</h3>
             </div>
-
-            <div class="col-md-8">
-                <div class="card mb-3">
+        <div class="col-md-8">
+             <div class="card mb-3">
                     <h3 class="card-header bg-custom">Account Information</h3>
-                    <div class="card-body">
+                <div class="card-body">
                     <form asp-action="UpdateAccount" method="post">
+                        <!-- Form for updating account information. The form is submitted to the 'UpdateAccount' action method in the controller. -->
                         <div class="form-group" hidden>
                             <label asp-for="User.Id"></label>
                             <input asp-for="User.Id" type="text" class="form-control" value="@Model.User.Id" />
@@ -90,7 +90,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="User.Phone"></label>
-                            <input asp-for="User.Phone" type="tel" class="form-control" value="@Model.User.Phone" required pattern="^\d{3}-\d{3}-\d{4}$" title="Phone number must be in the format XXX-XXX-XXXX" maxlength="12" />
+                            <input asp-for="User.Phone" type="tel" class="form-control" value="@Model.User.Phone" required pattern="^(\+?[0-9]+)" title="Phone number must start with an optional '+' followed by digits" maxlength="12" />
                         </div>
                         <div class="form-group">
                             <label asp-for="User.Email"></label>
@@ -105,20 +105,18 @@
                         </div>
                     }
 
-                    <!-- Error Message -->
                     @if (TempData["AccountErrorMessage"] != null)
                     {
                         <div class="alert alert-danger">
                             @TempData["AccountErrorMessage"]
                         </div>
                     }
-                    </div>
                 </div>
-
+             </div>
                 <!-- Billing Information Card  -->
-                <div class="card mb-3">
+             <div class="card mb-3">
                 <h3 class="card-header bg-custom">Billing Information</h3>
-                    <div class="card-body">
+                <div class="card-body">
                     <form asp-action="UpdateWallet" method="post">
                         <div class="form-group" hidden>
                             <label asp-for="Wallet.WalletId"></label>
@@ -126,7 +124,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Wallet.CardHolderName"></label>
-                            <input asp-for="Wallet.CardHolderName" type="text" class="form-control" value="@Model.Wallet.CardHolderName" required pattern="^[A-Za-z]{1,12}$" title="First name should only contain letters and be 1 to 12 characters long" />
+                            <input asp-for="Wallet.CardHolderName" type="text" class="form-control" value="@Model.Wallet.CardHolderName" required pattern="^[A-Za-z ]{1,12}$" title="First name should only contain letters and be 1 to 12 characters long" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Wallet.CardNumber"></label>
@@ -140,17 +138,15 @@
                             @TempData["WalletSuccessMessage"]
                         </div>
                     }
-
-                    <!-- Error Message -->
                     @if (TempData["WalletErrorMessage"] != null)
                     {
                         <div class="alert alert-danger">
                             @TempData["WalletErrorMessage"]
                         </div>
                     }
-                    </div>
                 </div>
-
+             </div>
+            <!-- Display a list of user bookings. This section provides an overview of all bookings made by the user, including details such as booking date, location, and status. -->
             <div class="card custom-scrollbar" style="max-height: 500px; overflow-y: auto;">
                 <h3 class="card-header sticky-header bg-custom">Bookings</h3>
                 <div class="card-body">
@@ -168,8 +164,6 @@
                     }
                 </div>
             </div>
-
-
-            </div>
         </div>
     </div>
+</div>

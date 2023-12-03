@@ -1,4 +1,16 @@
-﻿@model IEnumerable<PARKIT_enterprise_final.Models.MapPoint>
+﻿@*
+    Created by Alexander Carvalho
+
+    This page is the home page of the website. It contains the map and the side bar.
+    The map is loaded with the Google Maps API and the side bar is loaded with the
+    listings that are found in the database.
+
+    Each map listing is loaded into the map and the side bar with a foreach loop.
+    The map points are given an 'onClick' event that redirects the user to the booking
+    page for that specific listing.
+*@
+
+@model IEnumerable<PARKIT_enterprise_final.Models.MapPoint>
 @{
     ViewData["Title"] = "Map";
 }

@@ -1,7 +1,15 @@
-﻿using PARKIT_enterprise_final.Models.Interfaces;
+﻿/// <summary>
+/// Created by Alexander Carvalho, functionality for all map points
+/// </summary>
+
+
+using PARKIT_enterprise_final.Models.Interfaces;
 
 namespace PARKIT_enterprise_final.Models.Operations
 {
+    /// <summary>
+    /// Created by Alexander Carvalho, functionality for all map points
+    /// </summary>
     public class MapPointOperations : IMapPointProvider
     {
         private readonly IListingsProvider _listingProvider;
@@ -11,12 +19,15 @@ namespace PARKIT_enterprise_final.Models.Operations
             _listingProvider = listingProvider;
         }
 
+        /// <summary>
+        /// Get all available listings and convert them to map points
+        /// </summary>
         public List<MapPoint> GetMapPoints()
         {
-            List<MapPoint> mapPoints = new List<MapPoint>();
-            List<Listing> listings = _listingProvider.GetListings();
+            List<MapPoint> mapPoints = new List<MapPoint>(); // Create an empty list of map points
+            List<Listing> listings = _listingProvider.GetListings(); // Get all listings
 
-            foreach (Listing listing in listings)
+            foreach (Listing listing in listings) // Convert each listing to a map point
             {
                 MapPoint mapPoint = new MapPoint
                 {
