@@ -34,8 +34,6 @@ namespace PARKIT_enterprise_final.Controllers
 
             List<Booking> bookings = _bookingProvider.GetAllBookings(Guid.Parse(userId));
 
-/*            Booking List<Booking> = */
-
 
             var viewModel = new AccountsViewModel
             {
@@ -53,11 +51,11 @@ namespace PARKIT_enterprise_final.Controllers
             if (ModelState.IsValid)
             {
                 _userProvider.UpdateUser(user);
-
+                TempData["AccountSuccessMessage"] = "Account Information updated successfully.";
                 return RedirectToAction("Account", "Account");
             }
-
-            return RedirectToAction("Index", "Home");
+            TempData["AccountErrorMessage"] = "Error updating account. Please try again.";
+            return RedirectToAction("Account", "Account");
         }
         [HttpPost]
         public IActionResult UpdateWallet([Bind(Prefix = "Wallet")] Wallet wallet)
@@ -65,11 +63,12 @@ namespace PARKIT_enterprise_final.Controllers
             if (ModelState.IsValid)
             {
                 _walletProvider.UpdateWallet(wallet);
+                TempData["WalletSuccessMessage"] = "Billing Information updated successfully.";
 
                 return RedirectToAction("Account", "Account");
             }
-
-            return RedirectToAction("Index", "Home");
+            TempData["WalletErrorMessage"] = "Error updating billing information. Please try again.";
+            return RedirectToAction("Account", "Account");
         }
     }
 }

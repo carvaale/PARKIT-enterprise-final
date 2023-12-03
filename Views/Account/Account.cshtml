@@ -4,6 +4,7 @@
 
 @{
 }
+
 <style>
     /* Custom scrollbar style to hide the scrollbar */
     .custom-scrollbar::-webkit-scrollbar {
@@ -81,22 +82,36 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="User.FirstName"></label>
-                            <input asp-for="User.FirstName" type="text" class="form-control" value="@Model.User.FirstName" />
+                            <input asp-for="User.FirstName" type="text" class="form-control" value="@Model.User.FirstName" required pattern="^[A-Za-z]{1,12}$" title="First name should only contain letters and be 1 to 12 characters long" />
                         </div>
                         <div class="form-group">
                             <label asp-for="User.LastName"></label>
-                            <input asp-for="User.LastName" type="text" class="form-control" value="@Model.User.LastName" />
+                            <input asp-for="User.LastName" type="text" class="form-control" value="@Model.User.LastName" required pattern="^[A-Za-z]{1,12}$" title="Last name should only contain letters and be 1 to 12 characters long" />
                         </div>
                         <div class="form-group">
                             <label asp-for="User.Phone"></label>
-                            <input asp-for="User.Phone" type="text" class="form-control" value="@Model.User.Phone" />
+                            <input asp-for="User.Phone" type="tel" class="form-control" value="@Model.User.Phone" required pattern="^\d{3}-\d{3}-\d{4}$" title="Phone number must be in the format XXX-XXX-XXXX" maxlength="12" />
                         </div>
                         <div class="form-group">
                             <label asp-for="User.Email"></label>
-                            <input asp-for="User.Email" type="text" class="form-control" value="@Model.User.Email" readonly/>
+                            <input asp-for="User.Email" type="email" class="form-control" value="@Model.User.Email" readonly/>
                         </div>
                         <button type="submit" class="btn bg-custom mt-3">Save Changes</button>
                     </form>
+                    @if (TempData["AccountSuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success mt-2">
+                            @TempData["AccountSuccessMessage"]
+                        </div>
+                    }
+
+                    <!-- Error Message -->
+                    @if (TempData["AccountErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["AccountErrorMessage"]
+                        </div>
+                    }
                     </div>
                 </div>
 
@@ -111,14 +126,28 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Wallet.CardHolderName"></label>
-                            <input asp-for="Wallet.CardHolderName" type="text" class="form-control" value="@Model.Wallet.CardHolderName" />
+                            <input asp-for="Wallet.CardHolderName" type="text" class="form-control" value="@Model.Wallet.CardHolderName" required pattern="^[A-Za-z]{1,12}$" title="First name should only contain letters and be 1 to 12 characters long" />
                         </div>
                         <div class="form-group">
                             <label asp-for="Wallet.CardNumber"></label>
-                            <input asp-for="Wallet.CardNumber" type="text" class="form-control" value="@Model.Wallet.CardNumber" />
+                            <input asp-for="Wallet.CardNumber" type="text" class="form-control" value="@Model.Wallet.CardNumber" required pattern="^\d{16}$" title="Card number must be exactly 16 digits long" maxlength="16"/>
                         </div>
                         <button type="submit" class="btn bg-custom mt-3">Save Changes</button>
                     </form>
+                    @if (TempData["WalletSuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success mt-2">
+                            @TempData["WalletSuccessMessage"]
+                        </div>
+                    }
+
+                    <!-- Error Message -->
+                    @if (TempData["WalletErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["WalletErrorMessage"]
+                        </div>
+                    }
                     </div>
                 </div>
 
@@ -132,8 +161,8 @@
                                 Booking ID: @booking.Id
                             </div>
                             <div class="card-body">
-                                <p class="card-text"><strong>Time:</strong> @booking.StartTime - @booking.EndTime</p>
-                                <p class="card-text"><strong>Amount Paid:</strong> @booking.TotalCost</p>
+                                <p class="card-text"><strong>TimeSlot:</strong> @booking.StartTime - @booking.EndTime</p>
+                                <p class="card-text"><strong>Amount Paid:</strong> $@booking.TotalCost</p>
                             </div>
                         </div>
                     }
