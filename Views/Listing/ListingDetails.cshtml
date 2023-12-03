@@ -4,63 +4,44 @@
     ViewData["Title"] = "ListingDetails";
 }
 
-<h1>ListingDetails</h1>
+<div class="update-listing">
+    <div class="center-container">
+        <div class="card form-container">
+            <div class="card-header form-header">
+                <h1 class="card-title">Listing Details</h1>
+            </div>
+            <div class="card-body form-body">
+                <h4>Listing</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">Is Available</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.IsAvailable)</dd>
 
-<div>
-    <h4>Listing</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsAvailable)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsBooked)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsBooked)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-@*         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd> *@
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Images)
-        </dt>
-        <dd class="col-sm-10">
-        @foreach (var item in ViewBag.Images)
-            {
-                <img src="data:image/PNG;base64, @item" alt="No Image Found" width="30" />
-            }
-        </dd>
+                    <dt class="col-sm-2">Is Booked</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.IsBooked)</dd>
 
+                    <dt class="col-sm-2">Start Time</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.StartTime)</dd>
 
-        
-    </dl>
-</div>
-<div>
-    <a asp-action="UpdateListing" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="AllListings">Back to List</a>
+                    <dt class="col-sm-2">End Time</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.EndTime)</dd>
+
+                    <dt class="col-sm-2">Price</dt>
+                    <dd class="col-sm-10">@Html.DisplayFor(model => model.Price)</dd>
+
+                    <dt class="col-sm-2">Images</dt>
+                    <dd class="col-sm-10">
+                        @foreach (var item in ViewBag.Images)
+                        {
+                            <img src="data:image/PNG;base64, @item" alt="No Image Found" width="30" class="mr-2" />
+                        }
+                    </dd>
+                    <div class="mt-3">
+                        <a asp-action="UpdateListing" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> | 
+                        <a asp-action="AllListings" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>

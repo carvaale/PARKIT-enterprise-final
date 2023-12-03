@@ -1,37 +1,12 @@
-﻿@model PARKIT_enterprise_final.Models.Listing
+﻿@* Created by Frank Carusi *@
+@model PARKIT_enterprise_final.Models.Listing
 
 @{
     ViewData["Title"] = "DeleteListing";
 }
 
-<style>
-    .center-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-    }
 
-    .card-container {
-        max-width: 800px;
-        width: 100%;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-        background-color: #dc3545; /* Bootstrap's danger color */
-        color: white;
-        border-radius: 15px 15px 0 0;
-    }
-
-    .btn-delete {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-    }
-</style>
-
+<div class="delete-listing">
 <div class="center-container">
     <div class="card card-container">
         <div class="card-header">
@@ -73,21 +48,17 @@
                     <dd class="col-sm-10">
                         @Html.DisplayFor(model => model.Price)
                     </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.User)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.User.Id)
-                    </dd>
                 </dl>
 
                 <form asp-action="DeleteListing">
                     <input type="hidden" asp-for="Id" />
                     <input type="submit" value="Delete" class="btn btn-delete" /> |
-                    <a asp-action="AllListings" class="btn ">Back to List</a> |
-                    <a asp-action="UpdateListing" asp-route-id="@Model.Id" class="btn">Edit</a>
+                    <a asp-action="AllListings" class="btn btn-secondary">Back to List</a> |
+                    <a asp-action="UpdateListing" asp-route-id="@Model.Id" class="btn btn-secondary">Edit</a>
                 </form>
+
             </div>
         </div>
     </div>
+</div>
 </div>

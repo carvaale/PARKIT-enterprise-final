@@ -1,53 +1,24 @@
-﻿@model IEnumerable<PARKIT_enterprise_final.Models.Listing>
+﻿@* Created by Frank Carusi, will display table with all the listings that the signed in user has on their account. 
+   Using this page they can edit, delete, or view the details of the listing. 
+*@
+@model IEnumerable<PARKIT_enterprise_final.Models.Listing>
 
 @{
     ViewData["Title"] = "AllListings";
 }
 
 
-<style>
-    .center-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-    }
-
-    .card-container {
-        max-width: 70vw; /* Adjust the maximum width as needed */
-        width: 100%;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-        background-color: #434f46; 
-        color: white;
-        border-radius: 15px 15px 0 0;
-    }
-
-    .table th, .table td {
-        text-align: center;
-    }
-
-    .btn-create {
-        background-color: #28a745;
-        color: white;
-        border: none;
-    }
-</style>
-
-<div class="center-container">
-    <div class="card card-container">
-        <div class="card-header">
+<div class="center-container center-container-listing">
+    <div class="card card-container card-container-listing">
+        <div class="card-header card-header-listing">
             <h1 class="card-title">All Listings</h1>
         </div>
         <div class="card-body">
             <p>
-                <a asp-action="CreateListing" class="btn btn-create">Create New</a>
+                <a asp-action="CreateListing" class="btn btn-create btn-create-listing">Create New</a>
             </p>
 
-            <table class="table table-bordered">
+            <table class="table table-bordered table-listing">
                 <thead>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Address.StreetAddress)</th>
