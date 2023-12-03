@@ -30,25 +30,21 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpPost]
         public IActionResult Login(User user)
         {
-            if (ModelState.IsValid)
+            string userName = user.Username;
+            User userInDatabase = _userProvider.GetUserByUsername(userName);
+            if (userInDatabase != null)
             {
-                string userName = user.Username;
-                User userInDatabase = _userProvider.GetUserByUsername(userName);
-                if (userInDatabase != null)
+                if (userInDatabase.Password == user.Password)
                 {
-                    if (userInDatabase.Password == user.Password)
-                    {
-                        // login successfully
-                        // add login user to session
-                        var session = _contextAccessor.HttpContext.Session;
-                        session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
-                        session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
-                        return RedirectToAction("Account", "Account");
-                    }
+                    // login successfully
+                    // add login user to session
+                    var session = _contextAccessor.HttpContext.Session;
+                    session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
+                    session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
+                    return RedirectToAction("Account", "Account");
                 }
-                ViewBag.Error = "UserName and Password doesn't match, please try again";
-                return View();
             }
+            ViewBag.Error = "UserName and Password doesn't match, please try again";
             return View();
         }
 
