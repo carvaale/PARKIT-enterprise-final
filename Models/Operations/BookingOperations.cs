@@ -18,9 +18,10 @@ namespace PARKIT_enterprise_final.Models.Operations
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public void AddBooking(Booking booking)
+        public void AddBooking(Booking booking, Listing listing)
         {
             _dbContext.Bookings.Add(booking);
+            listing.IsBooked = true;
             _dbContext.SaveChanges();
         }
 

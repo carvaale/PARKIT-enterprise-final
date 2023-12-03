@@ -33,7 +33,8 @@
                         @if (Context.Session.GetString("CurrentUser") != null )
                         {
                             <li class="nav-item">
-                                Hello! @Context.Session.GetString("CurrentUserName") <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a>
+                                @Context.Session.GetString("CurrentUserName")
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a>
                             </li>
                         }
                     </ul>
