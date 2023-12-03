@@ -13,9 +13,15 @@
 <style>
     /* Custom styles for carousel images */
     .owl-carousel .item img {
-        max-height: 40vh;
-        width: auto;
-        margin: 0 auto;
+        max-width: 100%;
+        max-height: 45vh;
+        object-fit: contain;
+    }
+
+    .imageContainer {
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
     }
 
     .listing-container {
@@ -28,44 +34,88 @@
         padding: 10px;
     }
 
+    .image-column {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
     body {
         margin-bottom: 0;
+    }
+
+    .bg-custom {
+        background-color: #375446;
+        color: white;
+    }
+
+    .bg-custom2 {
+        background-color: #5d7669;
+        color: white;
+    }
+    .card-body {
+        background-color: #ebeeec;
+    }
+
+    input:focus {
+        border: 2px solid #375446 !important;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(55, 84, 70, 0.25) !important;
     }
 </style>
 
 <div class="mt-3">
     <!-- Carousel for images -->
-    <div class="owl-carousel owl-theme">
-        @foreach (var image in images)
-        {
-            <div class="item">
-                <img src="data:image/png;base64,@Convert.ToBase64String(image.ImageData)" class="d-block w-100" alt="Listing Image">
+    <div class="image-column">
+        <div class="card">
+            <h3 class="card-header bg-custom">Listing Details</h3>
+            <div class="card-body p-0">
+                <div class="row">
+                    <!-- Owl Carousel Column -->
+                    <div class="col-md-6 imageContainer">
+                        <div class="owl-carousel owl-theme">
+                            @foreach (var image in images)
+                            {
+                                <div class="item">
+                                    <img src="data:image/png;base64,@Convert.ToBase64String(image.ImageData)" class="d-block w-100" alt="Listing Image">
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Address Column -->
+                    <div class="col-md-6">
+                        <div class="card mt-2">
+                            <h5 class="card-header bg-custom2">Address</h5>
+                            <div class="card-body">
+                                <p class="mt-0">@address.StreetAddress</p>
+                                <p class="mb-0">@address.City, @address.ZipCode</p>
+                            </div>
+                        </div>
+                        <div class="card mt-2">
+                            <h5 class="card-header bg-custom2">Spot Owner Details</h5>
+                            <div class="card-body">
+                                <p class="mt-0">Username: @owner.Username</p>
+                                <p class="mb-0">Phone: @owner.Phone</p>
+                            </div>
+                        </div>
+                        <div class="card mt-2 mb-2">
+                            <h5 class="card-header bg-custom2">Availability</h5>
+                            <div class="card-body">                   
+                                <p class="mt-0"> Availability: @Model.Listing.StartTime - @Model.Listing.EndTime</p>
+                                <p class="mb-0">Price: $@Model.Listing.Price/hr</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        }
+        </div>
     </div>
 
     <div class="listing-container">
-        <div class="info-column">
-            <div class="col-md-6">
-                <h3>Address</h3>
-                <p>@address.StreetAddress</p>
-                <p>@address.City, @address.ZipCode</p>
-            </div>
-            <div class="col-md-6">
-                <h3>Spot Owner Details</h3>
-                <p>Username: @owner.Username</p>
-                <p>Phone: @owner.Phone</p>
-            </div>
-            <div class="col-md-6">
-                <h3>Payment Information</h3>
-                <p>Card Name: @Model.Wallet.CardHolderName</p>
-                <p>Card Number: @Model.Wallet.CardNumber</p>
-            </div>
-        </div>
         <div class="form-column">
-            <div class="col-md-6">
-                <h3>Book This Spot</h3>
-                <form asp-action="BookListing" method="post">
+            <div class="card mb-3">
+                <h3 class="card-header bg-custom">Book This Spot</h3>
+                <form asp-action="BookListing" method="post" class="card-body">
                     <!-- Hidden field for Listing ID -->
                     <div class="mb-3" hidden>
                         <label asp-for="Listing"></label>
@@ -78,12 +128,11 @@
 
                     <div class="mb-3">
                         <label asp-for="Booking.LicensePlate" class="form-label">Car License Plate</label>
-                        <input asp-for="Booking.LicensePlate" type="text" class="form-control text-uppercase" required placeholder="Enter Car License Plate" maxlength="7" />
+                        <input asp-for="Booking.LicensePlate" type="text" class="form-control text-uppercase" required placeholder="Enter Car License Plate" maxlength="7"/>
                     </div>
 
-                    <!-- Input for number of hours -->
+
                     <div class="row">
-                        <!-- Input for Start Time -->
                         <div class="col-md-6 mb-3">
                             <label asp-for="Booking.StartTime" class="form-label">Start Time</label>
                             <input asp-for="Booking.StartTime" type="time" class="form-control"
@@ -91,20 +140,26 @@
                                    max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
                         </div>
 
-                        <!-- Input for End Time -->
                         <div class="col-md-6 mb-3">
                             <label asp-for="Booking.EndTime" class="form-label">End Time</label>
                             <input asp-for="Booking.EndTime" type="time" class="form-control"
                                    required min="@Model.Listing.StartTime.ToString(@"hh\:mm")"
                                    max="@Model.Listing.EndTime.ToString(@"hh\:mm")" />
+                            <span asp-validation-for="Booking.EndTime" class="text-danger"></span>
                         </div>
                     </div>
 
-                    <p>Availability: <b>@Model.Listing.StartTime</b> - <b>@Model.Listing.EndTime</b></p>
-
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary">Reserve</button>
+                    <button type="submit" class="btn bg-custom">Reserve</button>
                 </form>
+            </div>
+        </div>
+        <div class="info-column">
+            <div class="card mb-3">
+                <h3 class="card-header bg-custom">Payment Information</h3>
+                <div class="card-body">
+                    <p class="mt-0">Card Name: @Model.Wallet.CardHolderName</p>
+                    <p class="mb-0">Card Number: @Model.Wallet.CardNumber</p>
+                </div>
             </div>
         </div>
     </div>
@@ -114,23 +169,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $(document).ready(function () {
+        var numItems = $('.owl-carousel .item').length; 
+
         $(".owl-carousel").owlCarousel({
             center: true,
-            loop: true,
+            loop: numItems > 1,
             margin: 10,
             nav: false,
-            items: 2,
             autoplay: true,
             autoplayTimeout: 2500,
             autoplayHoverPause: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                1000: {
-                    items: 2
-                }
-            }
+            items: 1,
+            dots: false
         });
     });
 </script>
