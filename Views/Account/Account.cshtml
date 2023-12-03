@@ -1,0 +1,146 @@
+﻿@using PARKIT_enterprise_final.ViewModels
+
+@model AccountsViewModel
+
+@{
+}
+<style>
+    /* Custom scrollbar style to hide the scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .custom-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    /* Sticky header style */
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 1020; /* Ensures the header is above other content */
+        background-color: white; /* Or any color that matches your design */
+    }
+    .bg-custom{
+        background-color: #375446;
+        color: white;
+    }
+
+    .bg-custom2 {
+        background-color: #5d7669;
+        color: white;
+    }
+
+    input:focus {
+        border: 2px solid #375446 !important;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(55, 84, 70, 0.25) !important;
+    }
+</style>
+    <div class="container">
+        <!-- Profile and Cards Section -->
+    <div class="row my-4">
+        <div class="col-md-4 text-center ">
+            <img class="rounded-circle shadow-4-strong" alt="avatar2" src="~/images/pfpPic.svg" width="128" height="128" />
+            <h3 class="my-2 mt-3">@Model.User.Username</h3>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <h3 class="card-header bg-custom">Account Information</h3>
+                    <div class="card-body">
+                    <form asp-action="UpdateAccount" method="post">
+                        <div class="form-group" hidden>
+                            <label asp-for="User.Id"></label>
+                            <input asp-for="User.Id" type="text" class="form-control" value="@Model.User.Id" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label asp-for="User.Address"></label>
+                            <input asp-for="User.Address" type="text" class="form-control" value="@Model.User.Address" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label asp-for="User.Listings"></label>
+                            <input asp-for="User.Listings" type="text" class="form-control" value="@Model.User.Listings" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label asp-for="User.Username"></label>
+                            <input asp-for="User.Username" type="text" class="form-control" value="@Model.User.Username" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label asp-for="User.Wallet"></label>
+                            <input asp-for="User.Wallet" type="text" class="form-control" value="@Model.User.Wallet" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label asp-for="User.WalletId"></label>
+                            <input asp-for="User.WalletId" type="text" class="form-control" value="@Model.User.WalletId" />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label asp-for="User.Password"></label>
+                            <input asp-for="User.Password" type="text" class="form-control" value="@Model.User.Password" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.FirstName"></label>
+                            <input asp-for="User.FirstName" type="text" class="form-control" value="@Model.User.FirstName" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.LastName"></label>
+                            <input asp-for="User.LastName" type="text" class="form-control" value="@Model.User.LastName" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.Phone"></label>
+                            <input asp-for="User.Phone" type="text" class="form-control" value="@Model.User.Phone" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.Email"></label>
+                            <input asp-for="User.Email" type="text" class="form-control" value="@Model.User.Email" readonly/>
+                        </div>
+                        <button type="submit" class="btn bg-custom mt-3">Save Changes</button>
+                    </form>
+                    </div>
+                </div>
+
+                <!-- Billing Information Card  -->
+                <div class="card mb-3">
+                <h3 class="card-header bg-custom">Billing Information</h3>
+                    <div class="card-body">
+                    <form asp-action="UpdateWallet" method="post">
+                        <div class="form-group" hidden>
+                            <label asp-for="Wallet.WalletId"></label>
+                            <input asp-for="Wallet.WalletId" type="text" class="form-control" value="@Model.Wallet.WalletId" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Wallet.CardHolderName"></label>
+                            <input asp-for="Wallet.CardHolderName" type="text" class="form-control" value="@Model.Wallet.CardHolderName" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Wallet.CardNumber"></label>
+                            <input asp-for="Wallet.CardNumber" type="text" class="form-control" value="@Model.Wallet.CardNumber" />
+                        </div>
+                        <button type="submit" class="btn bg-custom mt-3">Save Changes</button>
+                    </form>
+                    </div>
+                </div>
+
+            <div class="card custom-scrollbar" style="max-height: 500px; overflow-y: auto;">
+                <h3 class="card-header sticky-header bg-custom">Bookings</h3>
+                <div class="card-body">
+                    @foreach (var booking in Model.BookingList)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-header bg-custom2">
+                                Booking ID: @booking.Id
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Time:</strong> @booking.StartTime - @booking.EndTime</p>
+                                <p class="card-text"><strong>Amount Paid:</strong> @booking.TotalCost</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+            </div>
+        </div>
+    </div>

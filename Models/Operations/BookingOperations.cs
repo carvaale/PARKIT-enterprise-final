@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PARKIT_enterprise_final.Models.DBContext;
 using PARKIT_enterprise_final.Models.Interfaces;
 
@@ -8,30 +9,32 @@ namespace PARKIT_enterprise_final.Models.Operations
     {
         private readonly PARKITDBContext _dbContext;
         private readonly IListingsProvider _listingProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BookingOperations(PARKITDBContext dbContext, IListingsProvider listingProvider)
+        public BookingOperations(PARKITDBContext dbContext, IListingsProvider listingProvider, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _listingProvider = listingProvider;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public void AddBooking(Booking booking)
+        public void AddBooking(Booking booking, Listing listing)
         {
             _dbContext.Bookings.Add(booking);
+            listing.IsBooked = true;
             _dbContext.SaveChanges();
         }
 
         public Booking CreateBooking(Booking booking, string userId) 
         {
-            booking.Id = Guid.NewGuid();
             booking.TotalCost = CalculateTotalCost(booking);
             booking.UserID = Guid.Parse(userId);
             return booking;
         }
 
-        public Booking GetBooking(Guid Id)
+        public List<Booking> GetAllBookings(Guid Id)
         {
-               return _dbContext.Bookings.Find(Id);
+            return _dbContext.Bookings.Where(b => b.UserID == Id).Take(5).ToList();
         }
 
         public double CalculateTotalCost(Booking booking)
@@ -47,6 +50,19 @@ namespace PARKIT_enterprise_final.Models.Operations
             double totalCost = totalHours * 20;
 
             return totalCost;
+        }
+
+        public string getUserId()
+        {
+            string value = _httpContextAccessor.HttpContext.Session.GetString("CurrentUser");
+
+            if (string.IsNullOrEmpty(value))
+            {
+                return "false";
+            }
+            User user = JsonConvert.DeserializeObject<User>(value);
+            string userId = user.Id.ToString();
+            return userId;
         }
     }
 }
