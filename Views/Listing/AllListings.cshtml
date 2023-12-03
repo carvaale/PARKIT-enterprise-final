@@ -7,18 +7,18 @@
     ViewData["Title"] = "AllListings";
 }
 
-
-<div class="center-container center-container-listing">
-    <div class="card card-container card-container-listing">
-        <div class="card-header card-header-listing">
+<div class="all-listing">   
+<div class="center-container">
+    <div class="card card-container">
+        <div class="card-header">
             <h1 class="card-title">All Listings</h1>
         </div>
         <div class="card-body">
             <p>
-                <a asp-action="CreateListing" class="btn btn-create btn-create-listing">Create New</a>
+                <a asp-action="CreateListing" class="btn btn-create">Create New</a>
             </p>
 
-            <table class="table table-bordered table-listing">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Address.StreetAddress)</th>
@@ -51,4 +51,5 @@
             </table>
         </div>
     </div>
+</div>
 </div>

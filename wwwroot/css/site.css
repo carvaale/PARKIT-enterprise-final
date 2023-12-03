@@ -652,36 +652,46 @@ bg-success {
         border-color: #578553;
     }
 }
-
-.center-container-listing {
+.all-listing .center-container {
+    
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
 }
 
-.card-container-listing {
-    max-width: 70vw;
-    / width: 100%;
+.all-listing .card-container {
+    width: 80vw;
+    max-width: 80vw; 
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 30px auto 0;
+    overflow: hidden;
 }
 
-.card-header-listing {
+.all-listing .card-header {
     background-color: #434f46;
     color: white;
     border-radius: 15px 15px 0 0;
 }
 
-.table-listing th, .table-listing td {
+.all-listing .table th,
+.all-listing .table td {
     text-align: center;
 }
 
-.btn-create-listing {
+.all-listing .btn-create {
     background-color: #28a745;
     color: white;
     border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
 }
+
+    .all-listing .btn-create:hover {
+        background-color: #218838;
+    }
 
 .update-listing .center-container {
     display: flex;
