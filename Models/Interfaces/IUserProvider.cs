@@ -1,4 +1,8 @@
-﻿namespace PARKIT_enterprise_final.Models.Interfaces
+﻿/// <summary>
+/// Created by Ruiyan Shi 
+/// standard services interface for accessing the user database table
+/// </summary>
+namespace PARKIT_enterprise_final.Models.Interfaces
 {
     public interface IUserProvider
     {

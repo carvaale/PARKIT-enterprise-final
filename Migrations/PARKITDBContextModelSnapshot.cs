@@ -44,7 +44,7 @@ namespace PARKIT_enterprise_final.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("PARKIT_enterprise_final.Models.Listing", b =>
@@ -75,7 +75,7 @@ namespace PARKIT_enterprise_final.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Listings", (string)null);
+                    b.ToTable("Listings");
                 });
 
             modelBuilder.Entity("PARKIT_enterprise_final.Models.User", b =>
@@ -85,31 +85,41 @@ namespace PARKIT_enterprise_final.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("WalletId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PARKIT_enterprise_final.Models.Wallet", b =>
@@ -123,11 +133,12 @@ namespace PARKIT_enterprise_final.Migrations
 
                     b.Property<string>("CardNumber")
                         .IsRequired()
+                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
                     b.HasKey("WalletId");
 
-                    b.ToTable("Wallets", (string)null);
+                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("PARKIT_enterprise_final.Models.Listing", b =>
@@ -138,13 +149,14 @@ namespace PARKIT_enterprise_final.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("PARKIT_enterprise_final.Models.Listing.Address#PARKIT_enterprise_final.Models.Address", "Address", b1 =>
+                    b.OwnsOne("PARKIT_enterprise_final.Models.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("AddressId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("City")
                                 .IsRequired()
+                                .HasMaxLength(100)
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Latitude")
@@ -155,21 +167,23 @@ namespace PARKIT_enterprise_final.Migrations
 
                             b1.Property<string>("StreetAddress")
                                 .IsRequired()
+                                .HasMaxLength(100)
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
+                                .HasMaxLength(10)
                                 .HasColumnType("TEXT");
 
                             b1.HasKey("AddressId");
 
-                            b1.ToTable("Listings", (string)null);
+                            b1.ToTable("Listings");
 
                             b1.WithOwner()
                                 .HasForeignKey("AddressId");
                         });
 
-                    b.OwnsMany("PARKIT_enterprise_final.Models.Listing.Images#PARKIT_enterprise_final.Models.Image", "Images", b1 =>
+                    b.OwnsMany("PARKIT_enterprise_final.Models.Image", "Images", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .ValueGeneratedOnAdd()
@@ -186,7 +200,7 @@ namespace PARKIT_enterprise_final.Migrations
 
                             b1.HasIndex("ListingId");
 
-                            b1.ToTable("Images", (string)null);
+                            b1.ToTable("Images");
 
                             b1.WithOwner("Listing")
                                 .HasForeignKey("ListingId");
@@ -204,13 +218,14 @@ namespace PARKIT_enterprise_final.Migrations
 
             modelBuilder.Entity("PARKIT_enterprise_final.Models.User", b =>
                 {
-                    b.OwnsOne("PARKIT_enterprise_final.Models.User.Address#PARKIT_enterprise_final.Models.Address", "Address", b1 =>
+                    b.OwnsOne("PARKIT_enterprise_final.Models.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("AddressId")
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("City")
                                 .IsRequired()
+                                .HasMaxLength(100)
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Latitude")
@@ -221,21 +236,24 @@ namespace PARKIT_enterprise_final.Migrations
 
                             b1.Property<string>("StreetAddress")
                                 .IsRequired()
+                                .HasMaxLength(100)
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("ZipCode")
                                 .IsRequired()
+                                .HasMaxLength(10)
                                 .HasColumnType("TEXT");
 
                             b1.HasKey("AddressId");
 
-                            b1.ToTable("Users", (string)null);
+                            b1.ToTable("Users");
 
                             b1.WithOwner()
                                 .HasForeignKey("AddressId");
                         });
 
-                    b.Navigation("Address");
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PARKIT_enterprise_final.Models.Wallet", b =>
@@ -251,7 +269,8 @@ namespace PARKIT_enterprise_final.Migrations
                 {
                     b.Navigation("Listings");
 
-                    b.Navigation("Wallet");
+                    b.Navigation("Wallet")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
