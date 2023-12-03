@@ -1,4 +1,5 @@
-﻿@model PARKIT_enterprise_final.Models.User
+﻿<!--Created by Ruiyan Shi, to display user detail-->
+@model PARKIT_enterprise_final.Models.User
 
 @{
     ViewData["Title"] = "UserDetails";
@@ -10,6 +11,7 @@
     <h4>User</h4>
     <hr />
     <dl class="row">
+        <!--display all users information-->
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Username)
         </dt>
@@ -49,6 +51,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="UpdateUser" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="AllUsers">Back to List</a>
+    <!--link to update user-->
+    <a asp-action="UpdateUser" asp-route-id="@Model?.Id">Edit</a>
 </div>
