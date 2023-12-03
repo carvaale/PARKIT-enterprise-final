@@ -74,7 +74,7 @@ namespace PARKIT_enterprise_final.Controllers
                 }
                 booking = _bookingProvider.CreateBooking(booking, userId);
 
-                _bookingProvider.AddBooking(booking);
+                _bookingProvider.AddBooking(booking,listing);
 
                 return RedirectToAction("Account", "Account");
             }
