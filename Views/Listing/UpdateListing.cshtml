@@ -1,54 +1,12 @@
-﻿@model PARKIT_enterprise_final.Models.Listing
+﻿@* Created by Frank Carusi*@
+@model PARKIT_enterprise_final.Models.Listing
 
 @{
     ViewData["Title"] = "UpdateListing";
 }
 
-<style>
-    .center-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-    }
 
-    .form-container {
-        max-width: 600px;
-        width: 100%;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-header {
-        background-color: #007bff;
-        color: white;
-        border-radius: 15px 15px 0 0;
-        padding: 15px;
-        text-align: center;
-    }
-
-    .form-body {
-        padding: 20px;
-    }
-
-    .btn-save {
-        background-color: #28a745;
-        color: white;
-        border: none;
-    }
-
-    .btn-back {
-        background-color: #007bff;
-        color: white;
-        border: none;
-    }
-
-    .img-preview {
-        margin: 10px;
-        max-width: 30px;
-    }
-</style>
-
+<div class="update-listing">
 <div class="center-container">
     <div class="card form-container">
         <div class="card-header form-header">
@@ -67,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="StartTime" class="control-label"></label>
-                    <input asp-for="StartTime" type="time" class="form-control" />
+                    <input asp-for="StartTime" type="time" class="form-control" onchange="updateEndTimeMin()"/>
                     <span asp-validation-for="StartTime" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -100,11 +58,6 @@
         </div>
     </div>
 </div>
+</div>
 
 
-<script>
-    function updateEndTimeMin() {
-        var startTime = document.getElementById("StartTime").value;
-        document.getElementById("EndTime").min = startTime;
-    }
-</script>

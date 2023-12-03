@@ -1,4 +1,7 @@
-﻿namespace PARKIT_enterprise_final.Models.Interfaces
+﻿/// <summary>
+/// Created by Frank Carusi, interface for all listing related operations, for functionality documentation refer to the ListingsProvider class
+/// </summary>
+namespace PARKIT_enterprise_final.Models.Interfaces
 {
     public interface IListingsProvider
     {
