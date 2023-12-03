@@ -3,6 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PARKIT_enterprise_final.Models
 {
+    /// <summary>
+    /// Author: Syed Taha Faisal
+    /// Description: Represents a booking in the system. This class includes properties that define the characteristics of a booking, such as timing, cost, and associated user and listing IDs.
+    /// </summary>
     public class Booking
     {
         [Key]
