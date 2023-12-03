@@ -60,7 +60,7 @@ a {
 
 .side-bar {
     position: absolute;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.15);
     margin: 10px;
     width: 450px;
     height: 450px;
@@ -74,7 +74,7 @@ a {
     }
 
 #side-bar-title {
-    margin: 5px;
+    margin: 15px;
     padding: 5px;
     display: flex;
     flex-direction: row;
@@ -87,7 +87,7 @@ a {
 }
 
 .side-bar-item {
-    margin: 5px;
+    margin: 15px;
     padding: 5px;
     display: flex;
     flex-direction: row;
