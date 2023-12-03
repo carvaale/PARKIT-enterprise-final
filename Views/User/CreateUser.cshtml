@@ -1,82 +1,86 @@
 ﻿@model PARKIT_enterprise_final.Models.User
-
 @{
-    ViewData["Title"] = "CreateUser";
+    ViewData["Title"] = "Register";
 }
-
-<h1>CreateUser</h1>
-
-<h4>User</h4>
-<h4>@TempData["test"]</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary m-lg-0 py-3 rounded-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Register</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body p-4">
         <form asp-action="CreateUser">
             <div class="row">
                 <div class="col-10">
                     <div class="border p-3">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Username" class="control-label"></label>
-                            <input asp-for="Username" class="form-control" />
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="Username" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Username" class="form-control border-0 shadow mt-3" />
                             <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" />
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="Password" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Password" class="form-control border-0 shadow mt-3" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="FirstName" class="control-label"></label>
-                            <input asp-for="FirstName" class="form-control" />
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="FirstName" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="FirstName" class="form-control border-0 shadow mt-3" />
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="LastName" class="control-label"></label>
-                            <input asp-for="LastName" class="form-control" />
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="LastName" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="LastName" class="form-control border-0 shadow mt-3" />
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="Email" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Email" class="form-control border-0 shadow mt-3" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Phone" class="control-label"></label>
-                            <input asp-for="Phone" class="form-control" />
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="Phone" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Phone" class="form-control border-0 shadow mt-3" />
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
 
                         <!--input fields for address-->
-                        <div class="form-group">
-                            <label asp-for="Address.StreetAddress" class="control-label"></label>
-                            <input asp-for="Address.StreetAddress" class="form-control" />
-                            <span asp-validation-for="Address.StreetAddress" class="text-danger"></span>
+                        <div class="form-group form-floating py-2 col-12">
+                            <label asp-for="Address.StreetAddress" class="control-label ms-2 text-black-50"></label>
+                            <input aspfor="Address.StreetAddress" class="form-control border-0 shadow mt-3" />
+                            <span asp-validation-for="Address.StreetAddress" class="textdanger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Address.City" class="control-label"></label>
-                            <input asp-for="Address.City" class="form-control" />
+                        <div class="form-group form-floating py-2 col-12">
+                            <label asp-for="Address.City" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Address.City" class="form-control border-0 shadow mt-3">
                             <span asp-validation-for="Address.City" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Address.ZipCode" class="control-label"></label>
-                            <input asp-for="Address.ZipCode" class="form-control" />
-                            <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+                        <div class="form-group form-floating py-2 col-12">
+                            <label asp-for="Address.ZipCode" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Address.ZipCode" class="form-control border-0 shadow mt-3" />
+                            <span asp-validation-for="Address.ZipCode" class="textdanger"></span>
                         </div>
 
                         <!--input fields for wallet-->
-                        <div class="form-group">
-                            <label asp-for="Wallet.CardNumber" class="control-label"></label>
-                            <input asp-for="Wallet.CardNumber" class="form-control" />
-                            <span asp-validation-for="Wallet.CardNumber" class="text-danger"></span>
+                        <div class="form-group form-floating py-2 col-12">
+                            <label asp-for="Wallet.CardNumber" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Wallet.CardNumber" class="form-control border-0 shadow mt-3" />
+                            <span asp-validation-for="Wallet.CardNumber"class="textdanger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="Wallet.CardHolderName" class="control-label"></label>
-                            <input asp-for="Wallet.CardHolderName" class="form-control" />
-                            <span asp-validation-for="Wallet.CardHolderName" class="text-danger"></span>
+                        <div class="form-group form-floating py-2 col-12">
+                            <label asp-for="Wallet.CardHolderName" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Wallet.CardHolderName" class="form-control border-0 shadow mt-3" />
+                            <span asp-validation-for="Wallet.CardHolderName" class="textdanger"></span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <input type="submit" value="Register" class="btn btn-primary" />
+                            <div class="text-black-50 m-3">
+                                Already have account? <a asp-action="Login" class="text-black text-decoration-underline">Login</a> here
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,9 +89,6 @@
     </div>
 </div>
 
-<div>
-    Already have account? <a asp-action="Login">Login</a> here
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

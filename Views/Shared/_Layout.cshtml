@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PARKIT_enterprise_final.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     @RenderSection("Styles", false)
 </head>
 <body>
@@ -21,22 +22,32 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        <li class="nav-item ahover">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ahover">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Account">Account</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ahover">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Map">Map</a>
                         </li>                  
-                        <li class="nav-item">
+                        <li class="nav-item ahover">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Listing" asp-action="Index">My Listings</a>
                         </li>
                         @if (Context.Session.GetString("CurrentUser") != null )
                         {
-                            <li class="nav-item">
-                                Hello! @Context.Session.GetString("CurrentUserName") <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a>
+                            <li class="ms-auto ahover">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Account">@Context.Session.GetString("CurrentUserName")</a>
+                            </li>
+                            <li class="ahover">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a>
+                            </li>
+                        }else{
+                            <li class="nav-item ahover">
+                                <a class="nav-link text-dark ahover" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item ahover">
+                                <a class="nav-link text-dark ahover" asp-area="" asp-controller="User" asp-action="CreateUser">Register</a>
                             </li>
                         }
                     </ul>

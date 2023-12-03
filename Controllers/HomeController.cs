@@ -38,7 +38,7 @@ namespace PARKIT_enterprise_final.Controllers
         {
             if(_contextAccessor.HttpContext.Session.GetString("CurrentUser") != null)
             {
-                return RedirectToAction("Account", "Home");
+                return RedirectToAction("Account", "Account");
             }
             return RedirectToAction("CreateUser", "User");
         }
