@@ -155,7 +155,7 @@ namespace PARKIT_enterprise_final.Models.Operations
         /// <returns></returns>
         public List<Listing> GetListings()
         {
-            List<Listing> listings = _context.Listings.Where(l => l.IsAvailable == true).ToList(); // Only return listings that are available
+            List<Listing> listings = _context.Listings.Where(l => l.IsAvailable == true && l.IsBooked == false).ToList(); // Only return listings that are available
             return listings;
         }
 

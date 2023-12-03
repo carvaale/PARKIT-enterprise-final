@@ -1,4 +1,5 @@
-﻿@model PARKIT_enterprise_final.Models.Wallet
+﻿<!--Created by Ruiyan Shi, to edit-->
+@model PARKIT_enterprise_final.Models.Wallet
 
 @{
     ViewData["Title"] = "Edit";
@@ -9,6 +10,7 @@
 <h4>Wallet</h4>
 <hr />
 <div class="row">
+    <!--display wallet information-->
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -24,14 +26,11 @@
                 <span asp-validation-for="CardHolderName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <!-- button to update the wallet-->
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="AllWallets">Back to List</a>
 </div>
 
 @section Scripts {
