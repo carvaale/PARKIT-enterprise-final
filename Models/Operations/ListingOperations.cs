@@ -215,21 +215,23 @@ namespace PARKIT_enterprise_final.Models.Operations
             newListing.Price = double.Parse(listing["Price"]);
 
             var files = listing.Files; // get the files from the form
-
             List<Image> images = new List<Image>(); // Create a list of images to be added to the listing
-            
-            // Loop through the files and add them to the list of images
-            foreach (var file in files)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyTo(ms);
-                    var fileBytes = ms.ToArray();
-                    images.Add(new Image { ImageData = fileBytes, ListingId = newListing.Id });
-                }
-            }
-            newListing.Images = images; // set the images property of the listing to the list of images
 
+            if (files.Count > 0) // if there are files in the form
+            {
+
+                // Loop through the files and add them to the list of images
+                foreach (var file in files)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        images.Add(new Image { ImageData = fileBytes, ListingId = newListing.Id });
+                    }
+                }
+                newListing.Images = images; // set the images property of the listing to the list of images
+            }
 
             _context.Listings.Update(newListing);
             _context.SaveChanges();
