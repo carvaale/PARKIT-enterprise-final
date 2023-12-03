@@ -1,15 +1,18 @@
-﻿using System.Text.Json;
+﻿/// <summary>
+/// Created by Alexander Carvalho, Functionality to convert address to lat and lng
+/// using Google Geocode API
+/// </summary>
+
 using System.Net;
 using Newtonsoft.Json.Linq;
+using PARKIT_enterprise_final.Models;
 
 namespace PARKIT_enterprise_final.Utils
 {
-    public class LatLng
-    {
-        public string Lat { get; set; }
-        public string Lng { get; set; }
-    }
-
+    /// <summary>
+    /// Functionality to convert address to lat and lng
+    /// using Google Geocode API
+    /// </summary>
     public class GeocodeApi
     {
         private readonly HttpClient _client;
@@ -19,6 +22,10 @@ namespace PARKIT_enterprise_final.Utils
             _client = client;
         }
 
+        /// <summary>
+        /// Sends a request to the Google Geocode API to convert an address to lat and lng
+        /// </summary>
+        /// <param name="address"></param>
         public async Task<LatLng> GetGeocode(string address)
         {
             // Encode the address to be URL friendly
