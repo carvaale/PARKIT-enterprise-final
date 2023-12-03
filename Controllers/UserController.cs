@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PARKIT_enterprise_final.Models;
+using PARKIT_enterprise_final.ViewModels;
 using PARKIT_enterprise_final.Models.Interfaces;
 
 namespace PARKIT_enterprise_final.Controllers
@@ -40,27 +41,34 @@ namespace PARKIT_enterprise_final.Controllers
         // if the password match, will log the uer in
         // if not, return the error message
         [HttpPost]
-        public IActionResult Login(User user)
+        public IActionResult Login(UserLoginViewModel user)
+            // using userloginverModel to accept only username and password
         {
-            string userName = user.Username;
-            // get the user from data base by username
-            User userInDatabase = _userProvider.GetUserByUsername(userName);
-            //  if the database returns an existing user or null
-            if (userInDatabase != null)
+            if (ModelState.IsValid)
             {
-                // if the password matches
-                if (userInDatabase.Password == user.Password)
+                string userName = user.UserName;
+                // get the user from data base by username
+                User userInDatabase = _userProvider.GetUserByUsername(userName);
+                //  if the database returns an existing user or null
+                if (userInDatabase != null)
                 {
-                    // login successfully
-                    // add login user to session
-                    var session = _contextAccessor.HttpContext.Session;
-                    session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
-                    session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
-                    return RedirectToAction("Account", "Account");
+                    // if the password matches
+                    if (userInDatabase.Password == user.Password)
+                    {
+                        // login successfully
+                        // add login user to session
+                        var session = _contextAccessor.HttpContext.Session;
+                        session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
+                        session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
+                        return RedirectToAction("Account", "Account");
+                    }
                 }
+                ViewBag.Error = "UserName and Password doesn't match, please try again";
+                return View();
             }
             // add the error message and pass back to view by viewbag
-            ViewBag.Error = "UserName and Password doesn't match, please try again";
+            
+            ViewBag.Error = "Some Error Occurs, please report to the developer";
             return View();
         }
 
