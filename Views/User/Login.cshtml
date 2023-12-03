@@ -4,27 +4,38 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>CreateUser</h1>
 
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Login</h2>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body p-4">
         <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-                <a asp-action="CreateUser">Register</a>
+            <div class="row">
+                <div class="col-10">
+                    <div class="border p-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="Username" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Username" class="form-control border-0 shadow mt-3" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <label asp-for="Password" class="control-label ms-2 text-black-50"></label>
+                            <input asp-for="Password" class="form-control border-0 shadow mt-3" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="submit" value="Login" class="btn btn-primary" />
+                            <button asp-action="CreateUser" class="btn btn-primary m-3">Register</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

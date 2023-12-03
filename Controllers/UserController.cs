@@ -118,7 +118,7 @@ namespace PARKIT_enterprise_final.Controllers
             session.SetString("CurrentUserName", "");
             session.SetString("CurrentUser", "");
             _contextAccessor.HttpContext.Session.Clear();
-            return RedirectToAction("Account", "Home");
+            return RedirectToAction("Account", "Account");
         }
 
 
