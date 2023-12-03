@@ -34,24 +34,27 @@
                 <hr />
 
                 <form asp-action="CreateListing" method="post" enctype="multipart/form-data">
-                    <div asp-validation-summary="All"></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <label asp-for="Address.StreetAddress">Street Address</label>
                             <input asp-for="Address.StreetAddress" required placeholder="Enter a Street Address" />
+                            <span asp-validation-for="Address.StreetAddress" class="text-danger text-opacity-75"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Address.City">City</label>
                             <input asp-for="Address.City" required placeholder="Enter a City" />
+                            <span asp-validation-for="Address.City" class="text-danger text-opacity-75"></span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <label asp-for="Address.ZipCode">ZipCode</label>
-                            <input asp-for="Address.ZipCode" required placeholder="Enter a Zip Code without spaces" maxlength="7" />
+                            <input asp-for="Address.ZipCode" placeholder="L1Z 4H8" maxlength="7" minlength="7"/>
+                            <span asp-validation-for="Address.ZipCode" class="text-danger text-opacity-75"></span>
                         </div>
                     </div>
 
@@ -59,11 +62,13 @@
                         <div class="col-md-6">
                             <label asp-for="StartTime">Start Time</label>
                             <input asp-for="StartTime" type="time" required placeholder="Enter a start time" onchange="updateEndTimeMin()" />
+                            <span asp-validation-for="StartTime" class="textalert-danger"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="EndTime">End Time</label>
                             <input asp-for="EndTime" type="time" required placeholder="Enter an end time" min="" />
+                            <span asp-validation-for="EndTime" class="text-danger text-opacity-75"></span>
                         </div>
                     </div>
 
@@ -71,6 +76,7 @@
                         <div class="col-md-12">
                             <label asp-for="Price">Price per hour</label>
                             <input asp-for="Price" required placeholder="Enter a price above $0" pattern="^(?!-).*$" onerror="must be greater than 0" />
+                            <span asp-validation-for="Price" class="text-danger text-opacity-75"></span>
                         </div>
                     </div>
 
@@ -78,6 +84,7 @@
                         <div class="col-md-12">
                             <label asp-for="IsAvailable" class="form-check-inline">Is Available</label>
                             <input asp-for="IsAvailable" type="checkbox" class="form-check-inline" />
+                            
                         </div>
                     </div>
 
@@ -85,6 +92,7 @@
                         <div class="col-md-12">
                             <label asp-for="Files">Upload images</label>
                             <input asp-for="Files" type="file" multiple accept=".png" required placeholder="You must include atleast 1 image with the listing"/>
+
                         </div>
                     </div>
 

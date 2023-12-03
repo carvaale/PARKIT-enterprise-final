@@ -12,18 +12,19 @@ namespace PARKIT_enterprise_final.Models
 
         [Key]
         public Guid Id { get; set; } // primary key
-        [Required]
-        public Address Address { get; set; } // address of the listing
+        [Required (ErrorMessage = "Address is required")]
+        public Address? Address { get; set; } // address of the listing
         [Required]
         public bool IsAvailable { get; set; } // is the listing available for booking
         [Required]
         public bool IsBooked { get; set; } = false; // is the listing currently booked, set to false by default until the listing is booked
-        [Required]
+        [Required(ErrorMessage = "StartTime is required")]
         public TimeSpan StartTime { get; set; } // start time of the listing
-        [Required]
+        [Required(ErrorMessage = "EndTime is required")]
         public TimeSpan EndTime { get; set; } // end time of the listing
 
-        [Required]
+        [Required(ErrorMessage = "Price is required")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public double Price { get; set; } // price of the listing per hour
 
         public List<Image>? Images { get; set; } // list of images for the listing
