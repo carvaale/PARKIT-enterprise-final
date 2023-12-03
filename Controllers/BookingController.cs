@@ -27,15 +27,15 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpGet]
         public IActionResult BookListing(Guid Id)
         {
-            //Retreives single listing through Id
-            Listing listing = _listingProvider.GetById(Id);
-
             string userId = _bookingProvider.getUserId();
 
             if (userId == "false")
             {
                 return RedirectToAction("Login", "User");
             }
+
+            //Retreives single listing through Id
+            Listing listing = _listingProvider.GetById(Id);
 
             Wallet wallet = _walletProvider.GetWallet(Guid.Parse(userId));
 
