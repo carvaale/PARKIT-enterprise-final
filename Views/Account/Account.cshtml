@@ -22,17 +22,33 @@
         z-index: 1020; /* Ensures the header is above other content */
         background-color: white; /* Or any color that matches your design */
     }
+    .bg-custom{
+        background-color: #375446;
+        color: white;
+    }
+
+    .bg-custom2 {
+        background-color: #5d7669;
+        color: white;
+    }
+
+    input:focus {
+        border: 2px solid #375446 !important;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(55, 84, 70, 0.25) !important;
+    }
 </style>
     <div class="container">
         <!-- Profile and Cards Section -->
     <div class="row my-4">
         <div class="col-md-4 text-center ">
-            <h3 class="my-2">@Model.User.Username</h3>
+            <img class="rounded-circle shadow-4-strong" alt="avatar2" src="~/images/pfpPic.svg" width="128" height="128" />
+            <h3 class="my-2 mt-3">@Model.User.Username</h3>
             </div>
 
             <div class="col-md-8">
                 <div class="card mb-3">
-                    <div class="card-header">Account Information</div>
+                    <h3 class="card-header bg-custom">Account Information</h3>
                     <div class="card-body">
                     <form asp-action="UpdateAccount" method="post">
                         <div class="form-group" hidden>
@@ -79,14 +95,14 @@
                             <label asp-for="User.Email"></label>
                             <input asp-for="User.Email" type="text" class="form-control" value="@Model.User.Email" readonly/>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                        <button type="submit" class="btn bg-custom mt-3">Save Changes</button>
                     </form>
                     </div>
                 </div>
 
                 <!-- Billing Information Card  -->
                 <div class="card mb-3">
-                    <div class="card-header">Billing Information</div>
+                <h3 class="card-header bg-custom">Billing Information</h3>
                     <div class="card-body">
                     <form asp-action="UpdateWallet" method="post">
                         <div class="form-group" hidden>
@@ -101,18 +117,18 @@
                             <label asp-for="Wallet.CardNumber"></label>
                             <input asp-for="Wallet.CardNumber" type="text" class="form-control" value="@Model.Wallet.CardNumber" />
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                        <button type="submit" class="btn bg-custom mt-3">Save Changes</button>
                     </form>
                     </div>
                 </div>
 
             <div class="card custom-scrollbar" style="max-height: 500px; overflow-y: auto;">
-                <div class="card-header sticky-header">Bookings</div>
+                <h3 class="card-header sticky-header bg-custom">Bookings</h3>
                 <div class="card-body">
                     @foreach (var booking in Model.BookingList)
                     {
                         <div class="card mb-3">
-                            <div class="card-header">
+                            <div class="card-header bg-custom2">
                                 Booking ID: @booking.Id
                             </div>
                             <div class="card-body">
