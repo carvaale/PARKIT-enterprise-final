@@ -30,18 +30,24 @@ namespace PARKIT_enterprise_final.Controllers
         [HttpPost]
         public IActionResult Login(User user)
         {
-            User userInDatabase = _userProvider.GetUserByUsername(user.Username);
-            if(userInDatabase != null)
+            if (ModelState.IsValid)
             {
-                if (userInDatabase.Password == user.Password)
+                string userName = user.Username;
+                User userInDatabase = _userProvider.GetUserByUsername(userName);
+                if (userInDatabase != null)
                 {
-                    // login successfully
-                    // add login user to session
-                    var session = _contextAccessor.HttpContext.Session;
-                    session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
-                    session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
-                    return RedirectToAction("Account", "Account");
+                    if (userInDatabase.Password == user.Password)
+                    {
+                        // login successfully
+                        // add login user to session
+                        var session = _contextAccessor.HttpContext.Session;
+                        session.SetString("CurrentUserName", userInDatabase.FirstName.ToString());
+                        session.SetString("CurrentUser", JsonConvert.SerializeObject(userInDatabase));
+                        return RedirectToAction("Account", "Account");
+                    }
                 }
+                ViewBag.Error = "UserName and Password doesn't match, please try again";
+                return View();
             }
             return View();
         }
@@ -63,15 +69,21 @@ namespace PARKIT_enterprise_final.Controllers
         {
             if (ModelState.IsValid)
             {
-                User u = _userProvider.CreateUser(user);
-                u.WalletId = u.Wallet.WalletId;
-                _userProvider.UpdateUser(u);
+                string userName = user.Username;
+                User userInDatabase = _userProvider.GetUserByUsername(userName);
+                if(userInDatabase == null)
+                {
+                    User u = _userProvider.CreateUser(user);
+                    u.WalletId = u.Wallet.WalletId;
+                    _userProvider.UpdateUser(u);
 
-                var session = _contextAccessor.HttpContext.Session;
-                session.SetString("CurrentUserName", u.FirstName.ToString());
-                session.SetString("CurrentUser", JsonConvert.SerializeObject(u));
-                // need to change the destination
-                return RedirectToAction("Account", "Account");
+                    var session = _contextAccessor.HttpContext.Session;
+                    session.SetString("CurrentUserName", u.FirstName.ToString());
+                    session.SetString("CurrentUser", JsonConvert.SerializeObject(u));
+                    // need to change the destination
+                    return RedirectToAction("Account", "Account");
+                }
+                ViewBag.Error = "UserName already exists, please try another one!";
             }
             return View();
         }

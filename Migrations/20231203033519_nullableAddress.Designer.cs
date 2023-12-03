@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PARKIT_enterprise_final.Models.DBContext;
 
@@ -10,9 +11,11 @@ using PARKIT_enterprise_final.Models.DBContext;
 namespace PARKIT_enterprise_final.Migrations
 {
     [DbContext(typeof(PARKITDBContext))]
-    partial class PARKITDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231203033519_nullableAddress")]
+    partial class nullableAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
