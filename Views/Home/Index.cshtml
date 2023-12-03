@@ -4,7 +4,7 @@
 }
 
 <div class="side-bar">
-    <span id="side-bar-title">Listings: @Model.Count() found</span>
+    <span id="side-bar-title">Listings: &nbsp; <b>@Model.Count()</b>&nbsp; found</span>
     @foreach (MapPoint mapPoint in Model)
     {
         <a class="side-bar-item" href="/Booking/BookListing/@mapPoint.id">
@@ -12,10 +12,12 @@
                 <img src="data:image/png;base64,@mapPoint.thumbnail" alt="Listing Image" />
             </div>
             <div class="side-bar-item-info">
-                <span>Street: @mapPoint.street</span>
-                <span>City: @mapPoint.city</span>
-                <span>Zip: @mapPoint.zip</span>
-                <span>Price: $@mapPoint.price</span>
+                <span>@mapPoint.street</span>
+                <span>@mapPoint.city</span>
+                <span>@mapPoint.zip</span>
+            </div>
+            <div class="side-bar-item-price">
+                $@mapPoint.price<span>/hr</span>
             </div>
         </a>
     }
