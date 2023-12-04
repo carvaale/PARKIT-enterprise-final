@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/// <summary>
+/// Created by Alexander Carvalho
+/// Controller for the home page / map page
+/// </summary>
+
+using Microsoft.AspNetCore.Mvc;
 using PARKIT_enterprise_final.Models;
 using PARKIT_enterprise_final.Models.Interfaces;
 using System.Diagnostics;
@@ -15,6 +20,10 @@ namespace PARKIT_enterprise_final.Controllers
             _mapPointProvider = mapPointProvider;
         }
 
+        /// <summary>
+        /// Map page to display all the parking spots
+        /// Passes google api key to the view
+        /// </summary>
         public IActionResult Index()
         {
             List<MapPoint> mapPoints = _mapPointProvider.GetMapPoints();

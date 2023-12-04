@@ -66,7 +66,7 @@ namespace PARKIT_enterprise_final.Models.Operations
 
 
             // Calculate the total cost
-            double totalCost = totalHours * 20;
+            double totalCost = totalHours * listing.Price;
             totalCost = Math.Round(totalCost, 2);
 
             return totalCost;
